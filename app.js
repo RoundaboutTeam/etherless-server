@@ -1,7 +1,8 @@
 const init = require('./init');
 const business = require('./business');
 
-// EVENTS
+// EVENT
+/*
 init.contract.on("runRequest", (funcname, param, id, event) => {
   console.log('\nRun Request Received:' + '\nFunction Name: ' + funcname + "\nid: " + id);
 
@@ -18,7 +19,7 @@ init.contract.on("runRequest", (funcname, param, id, event) => {
     else
       business.sendResponse(data.Payload.toString(), id);
   });
-});
+});*/
 
 //serverless-cli functionality, used for testing
 init.contract.on("response", (response, id) => {
