@@ -2,7 +2,7 @@ const init = require('./init');
 const business = require('./business');
 
 // EVENT
-/*
+
 init.contract.on("runRequest", (funcname, param, id, event) => {
   console.log('\nRun Request Received:' + '\nFunction Name: ' + funcname + "\nid: " + id);
 
@@ -19,13 +19,14 @@ init.contract.on("runRequest", (funcname, param, id, event) => {
     else
       business.sendResponse(data.Payload.toString(), id);
   });
-});*/
+});
 
 //serverless-cli functionality, used for testing
 init.contract.on("response", (response, id) => {
   console.log('\nCaptured response for CLI with id ' + id + ' :\n' + response);
 });
 
+//Test
 (async function() {
   await business.runFunction('mul', '3,-5', '7');
 })();
