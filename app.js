@@ -1,7 +1,7 @@
 const init = require('./init');
 const business = require('./business');
 
-// EVENT
+// EVENTS
 
 init.contract.on("runRequest", (funcname, param, id, event) => {
   console.log('\nRun Request Received:' + '\nFunction Name: ' + funcname + "\nid: " + id);
@@ -13,7 +13,7 @@ init.contract.on("runRequest", (funcname, param, id, event) => {
 
   init.lambda.invoke(params, (err, data) => {
     if (err){
-      console.log('Error: ', err);
+      console.log('Lambda Invocation Error: ', err);
       business.sendResponse("An error occured. The function named " + funcname + " was not run.", id);
     }
     else
@@ -28,5 +28,6 @@ init.contract.on("response", (response, id) => {
 
 //Test
 (async function() {
-  await business.runFunction('mul', '3,-5', '7');
+  await business.runFunction('mul', '3,-5');
+  //business.printArray(await business.getList());
 })();
