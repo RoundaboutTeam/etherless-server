@@ -1,5 +1,5 @@
-import init from './init';
-import business from './business';
+import business from './src/app/business';
+import init from './src/app/init';
 
 // EVENTS
 init.contract.on('runRequest', (funcname: string, param: string, id: string, event: any) => {
@@ -27,6 +27,6 @@ init.contract.on('response', (response: string, id: string) => {
 
 // Test
 (async function () {
-  await business.runFunction('mul', '3,-5');
+  // await business.runFunction('mul', '3,-5');
   // business.printArray(await business.getList());
 }());
