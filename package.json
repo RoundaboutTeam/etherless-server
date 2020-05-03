@@ -13,7 +13,6 @@
     "@types/mocha": "^7.0.2",
     "@types/node": "^13.13.4",
     "aws-sdk": "^2.663.0",
-    "basetag": "^1.0.0",
     "ethers": "^4.0.47",
     "solc": "^0.5.17",
     "solidity": "0.0.1",
