@@ -4,16 +4,17 @@
   "description": "etherless-server v1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "deploySmart": "node -e require('./app.js').deploySmart()"
+    "start": "ts-node app.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^13.13.4",
     "aws-sdk": "^2.663.0",
     "ethers": "^4.0.47",
     "solc": "^0.5.17",
     "solidity": "0.0.1",
+    "ts-node": "^8.10.1",
     "typescript": "^3.8.3"
   },
   "devDependencies": {
