@@ -1,8 +1,8 @@
-import business from './business';
+import smart from './smart';
 
 (
   async function () {
     console.log('Adding a test function...');
-    await business.addFunction('mul', 1);
+    await smart.addFunction('mul', 1);
   }()
 );

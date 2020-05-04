@@ -6,7 +6,7 @@ const abPath = path.resolve(__dirname, '..', '..', 'configs', 'abi_bytecode.json
 const eSmartPath = path.resolve(__dirname, '..', '..', 'contracts', 'EtherlessSmart.sol');
 
 // app folder
-const businessPath:string = path.resolve(__dirname, '..', 'app', 'business.ts');
+const smartPath:string = path.resolve(__dirname, '..', 'app', 'smart.ts');
 const compileSmartPath = path.resolve(__dirname, '..', 'app', 'compileSmart.ts');
 const deploySmartPath = path.resolve(__dirname, '..', 'app', 'deploySmart.ts');
 const initSmartPath = path.resolve(__dirname, '..', 'app', 'initSmart.ts');
@@ -19,7 +19,7 @@ export default {
   configPath,
   abPath,
   eSmartPath,
-  businessPath,
+  smartPath,
   compileSmartPath,
   deploySmartPath,
   initSmartPath,

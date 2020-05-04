@@ -1,4 +1,4 @@
-import business from './src/app/business';
+import smart from './src/app/smart';
 import init from './src/app/init';
 
 // EVENTS
@@ -13,10 +13,10 @@ init.contract.on('runRequest', (funcname: string, param: string, id: string, eve
   init.lambda.invoke(params, (err: AWS.AWSError, data: AWS.Lambda.InvocationResponse) => {
     if (err) {
       console.log('Lambda Invocation Error: ', err);
-      business.sendResponse(`An error occured. The function named ${funcname} was not run.`, id);
+      smart.sendResponse(`An error occured. The function named ${funcname} was not run.`, id);
     } else if (data.Payload) {
-      business.sendResponse(data.Payload.toString(), id);
-    } else { business.sendResponse('Lambda invocation returned an empty response', id); }
+      smart.sendResponse(data.Payload.toString(), id);
+    } else { smart.sendResponse('Lambda invocation returned an empty response', id); }
   });
 });
 
@@ -27,6 +27,6 @@ init.contract.on('response', (response: string, id: string) => {
 
 // Test
 (async function () {
-  // await business.runFunction('mul', '3,-5');
-  // business.printArray(await business.getList());
+  // await smart.runFunction('mul', '3,-5');
+  // smart.printArray(await smart.getList());
 }());
