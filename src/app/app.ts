@@ -19,14 +19,3 @@ init.contract.on('runRequest', (funcname: string, param: string, id: string, eve
     } else { smart.sendResponse('Lambda invocation returned an empty response', id); }
   });
 });
-
-// serverless-cli functionality, used for testing
-init.contract.on('response', (response: string, id: string) => {
-  console.log(`\nCaptured response for CLI with id ${id} :\n${response}`);
-});
-
-// Test
-(async function () {
-  // await smart.runFunction('mul', '3,-5');
-  // smart.printArray(await smart.getList());
-}());
