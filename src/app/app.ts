@@ -1,5 +1,5 @@
-import smart from './src/app/smart';
-import init from './src/app/init';
+import smart from './smart';
+import init from './init';
 
 // EVENTS
 init.contract.on('runRequest', (funcname: string, param: string, id: string, event: any) => {
