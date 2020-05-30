@@ -1,11 +1,8 @@
-'use strict';
-
 module.exports.defaultHandler = async event =>{
-  const params = JSON.parse(event.parameters);
-  return {message:mul(params[0],params[1])};
+  const p = event.parameters;
+  return {message:mul(p[0], p[1])};
 }
 
-function mul(n,m)
-{
+function mul(n,m) {
   return n*m;
 }
