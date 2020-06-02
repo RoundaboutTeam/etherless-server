@@ -1,8 +1,12 @@
+import IEventProcessor from './IEventProcessor';
 import SmartManager from '../smart/SmartManager';
-import RunEventData from '../event/RunEventData';
 import AwsManager from '../aws/AwsManager';
+import RunEventData from '../event/RunEventData';
+import DeployEventData from '../event/DeployEventData';
+import EditEventData from '../event/EditEventData';
+import DeleteEventData from '../event/DeleteEventData';
 
-class Controller {
+class EventProcessor implements IEventProcessor {
     private smartManager: SmartManager;
 
     private awsManager: AwsManager;
@@ -20,9 +24,17 @@ class Controller {
         this.smartManager.sendResponse(result, data.id);
       } catch (err) {
         this.smartManager.sendError('Generic error', data.id);
-        console.log(err.message);
       }
+    }
+
+    async processDeployEvent(data: DeployEventData) {
+    }
+
+    async processEditEvent(data: EditEventData) {
+    }
+
+    async processDeleteEvent(data: DeleteEventData) {
     }
 }
 
-export default Controller;
+export default EventProcessor;

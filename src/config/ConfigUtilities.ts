@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import SmartConfig from './SmartConfig';
+import EthSmartConfig from './EthSmartConfig';
 import AwsConfig from './AwsConfig';
 
 abstract class ConfigUtilities {
@@ -10,10 +10,10 @@ abstract class ConfigUtilities {
 
   private static awsConfigPath: string = path.resolve(__dirname, '..', '..', 'configs', 'awsConfig.json');
 
-  public static getSmartConfig() {
+  public static getEthSmartConfig() {
     const config = JSON.parse(fs.readFileSync(this.smartConfigPath, 'UTF-8'));
     const abi = JSON.parse(fs.readFileSync(this.abiPath, 'UTF-8'));
-    return new SmartConfig(config.networkName, config.privateKey, config.contractAddress, abi);
+    return new EthSmartConfig(config.networkName, config.privateKey, config.contractAddress, abi);
   }
 
   public static getAwsConfig() {

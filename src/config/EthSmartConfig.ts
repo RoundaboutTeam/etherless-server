@@ -1,4 +1,4 @@
-class SmartConfig {
+class EthSmartConfig {
     public readonly networkName: string;
 
     public readonly privateKey: string;
@@ -15,4 +15,4 @@ class SmartConfig {
     }
 }
 
-export default SmartConfig;
+export default EthSmartConfig;

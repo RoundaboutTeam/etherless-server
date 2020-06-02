@@ -1,47 +1,25 @@
 import { BigNumber } from 'ethers/utils';
-import SmartConfig from '../config/SmartConfig';
 import EventDispatcher from '../event/EventDispatcher';
-import RunEventData from '../event/RunEventData';
 
-const ethers = require('ethers');
-
-class SmartManager {
-    private contract: any;
-
+abstract class SmartManager {
     public readonly runEventDispatcher: EventDispatcher;
 
-    constructor(config: SmartConfig) {
-      const provider = ethers.getDefaultProvider(config.networkName);
-      const wallet = new ethers.Wallet(config.privateKey, provider);
-      this.contract = new ethers.Contract(config.contractAddress, config.contractAbi, wallet);
+    public readonly deployEventDispatcher: EventDispatcher;
 
+    public readonly editEventDispatcher: EventDispatcher;
+
+    public readonly deleteEventDispatcher: EventDispatcher;
+
+    constructor() {
       this.runEventDispatcher = new EventDispatcher();
-
-      this.contract.on('runRequest', (functionName: string, parameters: string, id: BigNumber) => {
-        this.runEventDispatcher.dispatch(new RunEventData(functionName, parameters.split(','), id));
-      });
+      this.deployEventDispatcher = new EventDispatcher();
+      this.editEventDispatcher = new EventDispatcher();
+      this.deleteEventDispatcher = new EventDispatcher();
     }
 
-    async sendResponse(response: string, id: BigNumber) {
-      try {
-        await this.contract.resultFunction(response, id);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+    abstract sendResponse(response: string, id: BigNumber): void;
 
-    async sendError(response: string, id: any) {
-      try {
-        await this.contract.resultFunction(response, id);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
-    // temporary
-    getContract(): any {
-      return this.contract;
-    }
+    abstract sendError(response: string, id: any): void;
 }
 
 export default SmartManager;
