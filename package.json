@@ -1,10 +1,11 @@
 {
   "name": "etherless-server",
-  "version": "0.0.2",
-  "description": "etherless-server v0.0.2",
+  "version": "0.0.3",
+  "description": "etherless-server v0.0.3",
   "main": "app.js",
   "scripts": {
-    "start": "ts-node src/app.ts"
+    "start": "ts-node src/app.ts",
+    "test": "mocha -r ts-node/register test/**/*.ts"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +13,7 @@
     "@types/mocha": "^7.0.2",
     "aws-sdk": "^2.663.0",
     "ethers": "^4.0.47",
+    "ipfs-http-client": "^44.1.1",
     "solc": "^0.5.17",
     "solidity": "0.0.1",
     "ts-node": "^8.10.1",
@@ -21,6 +23,7 @@
     "@types/node": "^13.13.9",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
+    "chai": "^4.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-google": "^0.14.0",

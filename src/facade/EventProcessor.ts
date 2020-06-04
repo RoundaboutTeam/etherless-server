@@ -15,7 +15,9 @@ class EventProcessor implements IEventProcessor {
       this.smartManager = smartManager;
       this.awsManager = awsManager;
 
-      this.smartManager.runEventDispatcher.attach((data:RunEventData) => { this.processRunEvent(data); });
+      this.smartManager.runEventDispatcher.attach((data:RunEventData) => {
+        this.processRunEvent(data);
+      });
     }
 
     async processRunEvent(data: RunEventData) {

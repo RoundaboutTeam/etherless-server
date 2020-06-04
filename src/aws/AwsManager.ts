@@ -21,11 +21,11 @@ class AwsManager {
         const data: any = await this.lambda.invoke(parameters).promise();
         // runtime error in developer's code
         if (data.FunctionError !== undefined && data.Payload !== undefined) {
-          return 'Runtime Error: ' + JSON.parse(data.Payload).errorMessage;
+          throw (new Error('Runtime Error: ' + JSON.parse(data.Payload).errorMessage));
         }
         return data.Payload;
       } catch (err) { // lambda error, i.e. functionNotFound
-        return 'Fatal: ' + err.code;
+        throw (new Error('Fatal: ' + err.code));
       }
     }
 }

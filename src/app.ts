@@ -8,5 +8,5 @@ const smartManager: EthereumSmartManager = new EthereumSmartManager(ConfigUtilit
 const awsManager: AwsManager = new AwsManager(ConfigUtilities.getAwsConfig());
 const eventProcessor: EventProcessor = new EventProcessor(smartManager, awsManager);
 
-const cli: CliSimulator = new CliSimulator(smartManager.getContract());
-cli.runFunction('mul', '5, -5');
+// const cli: CliSimulator = new CliSimulator(smartManager.getContract());
+// cli.runFunction('mul', '5, -5');

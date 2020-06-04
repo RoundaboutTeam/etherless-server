@@ -4,12 +4,12 @@ import EventData from './EventData';
 class DeployEventData extends EventData {
     public readonly functionName: string;
 
-    public readonly parameters: Array<any>;
+    public readonly ipfsPath: string;
 
-    constructor(functionName: string, parameters: Array<any>, id: BigNumber) {
+    constructor(functionName: string, ipfsPath: string, id: BigNumber) {
       super(id);
       this.functionName = functionName;
-      this.parameters = parameters;
+      this.ipfsPath = ipfsPath;
     }
 }
 
