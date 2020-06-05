@@ -3,6 +3,7 @@ module.exports = {
     es6: true,
     node: true,
     mocha: true,
+    jest: true
   },
   extends: [
     'airbnb-base',

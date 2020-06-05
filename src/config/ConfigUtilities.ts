@@ -3,7 +3,7 @@ import path from 'path';
 import EthSmartConfig from './EthSmartConfig';
 import AwsConfig from './AwsConfig';
 
-abstract class ConfigUtilities {
+class ConfigUtilities {
   private static smartConfigPath: string = path.resolve(__dirname, '..', '..', 'configs', 'smartConfig.json');
 
   private static abiPath: string = path.resolve(__dirname, '..', '..', 'configs', 'abi.json');

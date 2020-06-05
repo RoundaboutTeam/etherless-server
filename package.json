@@ -5,12 +5,11 @@
   "main": "app.js",
   "scripts": {
     "start": "ts-node src/app.ts",
-    "test": "mocha -r ts-node/register test/**/*.ts"
+    "test": "jest --coverage"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/mocha": "^7.0.2",
     "aws-sdk": "^2.663.0",
     "ethers": "^4.0.47",
     "ipfs-http-client": "^44.1.1",
@@ -20,14 +19,15 @@
     "typescript": "^3.8.3"
   },
   "devDependencies": {
+    "@types/jest": "^25.2.3",
     "@types/node": "^13.13.9",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
-    "chai": "^4.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.20.2",
-    "mocha": "^7.1.2"
+    "jest": "^26.0.1",
+    "ts-jest": "^26.1.0"
   }
 }
