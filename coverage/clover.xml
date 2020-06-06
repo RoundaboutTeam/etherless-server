@@ -1,38 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1591472228440" clover="3.2.0">
-  <project timestamp="1591472228441" name="All files">
-    <metrics statements="100" coveredstatements="86" conditionals="14" coveredconditionals="8" methods="35" coveredmethods="25" elements="149" coveredelements="119" complexity="0" loc="100" ncloc="100" packages="5" files="8" classes="8"/>
-    <package name="aws">
-      <metrics statements="15" coveredstatements="7" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="2"/>
-      <file name="AwsManager.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\aws\AwsManager.ts">
-        <metrics statements="15" coveredstatements="7" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="2"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
-      </file>
-    </package>
+<coverage generated="1591472855954" clover="3.2.0">
+  <project timestamp="1591472855954" name="All files">
+    <metrics statements="85" coveredstatements="79" conditionals="8" coveredconditionals="8" methods="32" coveredmethods="23" elements="125" coveredelements="110" complexity="0" loc="85" ncloc="85" packages="4" files="7" classes="7"/>
     <package name="config">
       <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
       <file name="AwsConfig.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\config\AwsConfig.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
       </file>
       <file name="EthSmartConfig.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\config\EthSmartConfig.ts">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
