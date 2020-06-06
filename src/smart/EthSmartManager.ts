@@ -13,9 +13,11 @@ class EthereumSmartManager extends SmartManager {
       const provider = ethers.getDefaultProvider(config.networkName);
       const wallet = new ethers.Wallet(config.privateKey, provider);
       this.contract = new ethers.Contract(config.contractAddress, config.contractAbi, wallet);
+    }
 
+    listen(): void {
       this.contract.on('runRequest', (functionName: string, parameters: string, id: BigNumber) => {
-        this.runEventDispatcher.dispatch(new RunEventData(functionName, parameters.split(','), id));
+        this.dispatchRunEvent(new RunEventData(functionName, parameters.split(','), id));
       });
     }
 
@@ -27,7 +29,7 @@ class EthereumSmartManager extends SmartManager {
       }
     }
 
-    sendError(response: string, id: any) {
+    sendError(response: string, id: BigNumber) {
       try {
         this.contract.resultFunction(response, id);
       } catch (err) {

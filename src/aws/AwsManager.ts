@@ -25,7 +25,11 @@ class AwsManager {
         }
         return data.Payload;
       } catch (err) { // lambda error, i.e. functionNotFound
-        throw (new Error('Fatal: ' + err.code));
+        if (err.code !== undefined) {
+          throw (new Error('Fatal: ' + err.code));
+        } else {
+          throw (new Error('Fatal: Lambda function could not be run.'));
+        }
       }
     }
 }

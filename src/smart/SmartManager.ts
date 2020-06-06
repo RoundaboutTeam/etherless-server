@@ -1,14 +1,15 @@
 import { BigNumber } from 'ethers/utils';
 import EventDispatcher from '../event/EventDispatcher';
+import RunEventData from '../event/RunEventData';
 
 abstract class SmartManager {
-    public readonly runEventDispatcher: EventDispatcher;
+    protected runEventDispatcher: EventDispatcher;
 
-    public readonly deployEventDispatcher: EventDispatcher;
+    protected deployEventDispatcher: EventDispatcher;
 
-    public readonly editEventDispatcher: EventDispatcher;
+    protected editEventDispatcher: EventDispatcher;
 
-    public readonly deleteEventDispatcher: EventDispatcher;
+    protected deleteEventDispatcher: EventDispatcher;
 
     constructor() {
       this.runEventDispatcher = new EventDispatcher();
@@ -20,6 +21,38 @@ abstract class SmartManager {
     abstract sendResponse(response: string, id: BigNumber): void;
 
     abstract sendError(response: string, id: any): void;
+
+    public onRun(callback: any) {
+      this.runEventDispatcher.attach(callback);
+    }
+
+    public onDeploy(callback: any) {
+      this.deployEventDispatcher.attach(callback);
+    }
+
+    public onEdit(callback: any) {
+      this.editEventDispatcher.attach(callback);
+    }
+
+    public onDelete(callback: any) {
+      this.deleteEventDispatcher.attach(callback);
+    }
+
+    dispatchRunEvent(data: RunEventData) {
+      this.runEventDispatcher.dispatch(data);
+    }
+
+    dispatchDeployEvent(data: RunEventData) {
+      this.deployEventDispatcher.dispatch(data);
+    }
+
+    dispatchEditEvent(data: RunEventData) {
+      this.editEventDispatcher.dispatch(data);
+    }
+
+    dispatchDeleteEvent(data: RunEventData) {
+      this.deleteEventDispatcher.dispatch(data);
+    }
 }
 
 export default SmartManager;
