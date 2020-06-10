@@ -17,6 +17,8 @@ class EventProcessor implements IEventProcessor {
       });
     }
 
+    // orchestrates the processing of run events
+    // attached to the SmartManager's run dispatcher
     async processRunEvent(data: RunEventData) {
       try {
         const result = await this.awsManager.invokeLambda(data.functionName, data.parameters);

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1591779424679" clover="3.2.0">
-  <project timestamp="1591779424679" name="All files">
+<coverage generated="1591799102757" clover="3.2.0">
+  <project timestamp="1591799102757" name="All files">
     <metrics statements="79" coveredstatements="77" conditionals="14" coveredconditionals="14" methods="26" coveredmethods="24" elements="119" coveredelements="115" complexity="0" loc="79" ncloc="79" packages="4" files="7" classes="7"/>
     <package name="aws">
       <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
       <file name="AwsManager.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\aws\AwsManager.ts">
         <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
-        <line num="3" count="3" type="stmt"/>
-        <line num="7" count="3" type="stmt"/>
-        <line num="10" count="3" type="stmt"/>
-        <line num="11" count="8" type="stmt"/>
-        <line num="16" count="8" type="stmt"/>
-        <line num="18" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="7" type="stmt"/>
+        <line num="16" count="7" type="stmt"/>
+        <line num="18" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="19" count="2" type="stmt"/>
-        <line num="21" count="3" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
         <line num="23" count="5" type="cond" truecount="2" falsecount="0"/>
         <line num="24" count="3" type="stmt"/>
         <line num="26" count="2" type="stmt"/>
-        <line num="29" count="3" type="stmt"/>
-        <line num="31" count="3" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
       </file>
     </package>
     <package name="event">
@@ -35,23 +35,23 @@
         <line num="3" count="3" type="stmt"/>
         <line num="7" count="3" type="stmt"/>
         <line num="10" count="3" type="stmt"/>
-        <line num="11" count="6" type="stmt"/>
-        <line num="12" count="6" type="stmt"/>
-        <line num="13" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="9" type="stmt"/>
+        <line num="12" count="9" type="stmt"/>
+        <line num="13" count="16" type="cond" truecount="2" falsecount="0"/>
         <line num="14" count="1" type="stmt"/>
-        <line num="17" count="6" type="cond" truecount="2" falsecount="0"/>
-        <line num="18" count="5" type="stmt"/>
-        <line num="19" count="5" type="stmt"/>
+        <line num="17" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="8" type="stmt"/>
+        <line num="19" count="8" type="stmt"/>
         <line num="21" count="1" type="stmt"/>
         <line num="24" count="3" type="stmt"/>
         <line num="25" count="2" type="stmt"/>
-        <line num="26" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="9" type="cond" truecount="2" falsecount="0"/>
         <line num="27" count="1" type="stmt"/>
         <line num="28" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
         <line num="34" count="3" type="stmt"/>
         <line num="35" count="2" type="stmt"/>
-        <line num="36" count="3" type="stmt"/>
+        <line num="36" count="6" type="stmt"/>
         <line num="39" count="3" type="stmt"/>
         <line num="41" count="3" type="stmt"/>
       </file>
@@ -96,8 +96,8 @@
         <line num="12" count="2" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="17" count="2" type="stmt"/>
-        <line num="18" count="7" type="stmt"/>
-        <line num="19" count="7" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="19" count="5" type="stmt"/>
         <line num="24" count="2" type="stmt"/>
         <line num="26" count="2" type="stmt"/>
       </file>

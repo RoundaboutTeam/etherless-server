@@ -14,11 +14,12 @@ class EthereumSmartManager extends SmartManager {
       });
     }
 
+    // sends the run result to Etherless-Smart or retires other n times if an exception is caught
     sendRunResult(message: string, id: BigNumber, success: boolean) {
       try {
         this.contract.runResult(message, id, success);
       } catch (err) {
-        // send message again here
+        // retry sending message again here
       }
     }
 }

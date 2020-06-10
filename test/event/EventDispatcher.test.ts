@@ -4,21 +4,24 @@ import RunEventData from '../../src/event/RunEventData';
 
 const dispatcher = new EventDispatcher();
 
-const foo = function () {};
-
-test('attaches new listener', () => {
+test('correctly attaches a new callback', () => {
+  const foo = function () {};
   const attached = dispatcher.attach(foo);
   expect(attached).toBe(true);
 });
 
-test('does not attach an already attached listener', () => {
-  const attached = dispatcher.attach(foo);
+test('does not attach an already attached callback', () => {
+  const tmp = function () {};
+  dispatcher.attach(tmp);
+  const attached = dispatcher.attach(tmp);
   expect(attached).toBe(false);
 });
 
 test('attaches more than one listener', () => {
   const tmp = function () {};
-  const attached = dispatcher.attach(tmp);
+  const tmp1 = function () {};
+  dispatcher.attach(tmp);
+  const attached = dispatcher.attach(tmp1);
   expect(attached).toBe(true);
 });
 
@@ -29,7 +32,9 @@ test('does not detach a non existing listener', () => {
 });
 
 test('detaches existing listener', () => {
-  const detached = dispatcher.detach(foo);
+  const tmp = function () {};
+  dispatcher.attach(tmp);
+  const detached = dispatcher.detach(tmp);
   expect(detached).toBe(true);
 });
 

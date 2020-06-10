@@ -1,12 +1,8 @@
 import { BigNumber } from 'ethers/utils';
 import EventProcessor from '../../src/facade/EventProcessor';
 import EthSmartManager from '../../src/smart/EthSmartManager';
-import EthSmartConfig from '../../src/config/EthSmartConfig';
 import AwsManager from '../../src/aws/AwsManager';
 import RunEventData from '../../src/event/RunEventData';
-import AwsConfig from '../../src/config/AwsConfig';
-import SmartManager from '../../src/smart/SmartManager';
-
 
 const ethers = require('ethers');
 const AWS = require('aws-sdk');
