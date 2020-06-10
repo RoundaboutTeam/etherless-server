@@ -1,15 +1,10 @@
 import AWS from 'aws-sdk';
-import AwsConfig from '../config/AwsConfig';
 
 class AwsManager {
     private lambda: AWS.Lambda;
 
-    constructor(config: AwsConfig) {
-      AWS.config.update({
-        region: config.awsRegion,
-        credentials: new AWS.Credentials(config.awsKey, config.awsSecretKey),
-      });
-      this.lambda = new AWS.Lambda();
+    constructor(lambda: AWS.Lambda) {
+      this.lambda = lambda;
     }
 
     async invokeLambda(functionName: string, params: Array<string>): Promise<string> {
@@ -20,16 +15,15 @@ class AwsManager {
       try {
         const data: any = await this.lambda.invoke(parameters).promise();
         // runtime error in developer's code
-        if (data.FunctionError !== undefined && data.Payload !== undefined) {
-          throw (new Error('Runtime Error: ' + JSON.parse(data.Payload).errorMessage));
+        if (data.FunctionError) {
+          throw ({ code: data.Payload.errorMessage }); // catched by the next catch block
         }
-        return data.Payload;
-      } catch (err) { // lambda error, i.e. functionNotFound
+        return Promise.resolve(data.Payload);
+      } catch (err) { // lambda error, i.e. ResourceNotFound
         if (err.code !== undefined) {
-          throw (new Error('Fatal: ' + err.code));
-        } else {
-          throw (new Error('Fatal: Lambda function could not be run.'));
+          return Promise.reject(new Error('Error Code: ' + err.code));
         }
+        return Promise.reject(new Error('Fatal: Lambda function could not be run.'));
       }
     }
 }

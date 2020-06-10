@@ -1,8 +1,5 @@
-import EventData from '../event/EventData';
+import RunEventData from '../event/RunEventData';
 
 export default interface IEventProcessor {
-  processRunEvent(data: EventData): void;
-  processDeployEvent(data: EventData): void;
-  processEditEvent(data: EventData): void;
-  processDeleteEvent(data: EventData): void;
+  processRunEvent(data: RunEventData): void;
 };

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">43.75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/16</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.67% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.67% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/15</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -88,81 +88,63 @@
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import AWS from 'aws-sdk';
-import AwsConfig from '../config/AwsConfig';
 &nbsp;
 class AwsManager {
     private lambda: AWS.Lambda;
 &nbsp;
-    constructor(config: AwsConfig) {
-      AWS.config.update({
-        region: config.awsRegion,
-        credentials: new AWS.Credentials(config.awsKey, config.awsSecretKey),
-      });
-      this.lambda = new AWS.Lambda();
+    constructor(lambda: AWS.Lambda) {
+      this.lambda = lambda;
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    async i</span>nvokeLambda(functionName: string, params: Array&lt;string&gt;): Promise&lt;string&gt; {
-      const <span class="cstat-no" title="statement not covered" >parameters = {</span>
+    async invokeLambda(functionName: string, params: Array&lt;string&gt;): Promise&lt;string&gt; {
+      const parameters = {
         FunctionName: `serverless-dev-${functionName}`,
         Payload: JSON.stringify({ parameters: params }),
       };
       try {
-        const <span class="cstat-no" title="statement not covered" >data: any = <span class="cstat-no" title="statement not covered" >await this.lambda.invoke(parameters).promise();</span></span>
+        const data: any = await this.lambda.invoke(parameters).promise();
         // runtime error in developer's code
-<span class="cstat-no" title="statement not covered" >        if (data.FunctionError !== undefined &amp;&amp; data.Payload !== undefined) {</span>
-<span class="cstat-no" title="statement not covered" >          throw (new Error('Runtime Error: ' + JSON.parse(data.Payload).errorMessage));</span>
+        if (data.FunctionError) {
+          throw ({ code: data.Payload.errorMessage }); // catched by the next catch block
         }
-<span class="cstat-no" title="statement not covered" >        return data.Payload;</span>
-      } catch (err) { // lambda error, i.e. functionNotFound
-<span class="cstat-no" title="statement not covered" >        if (err.code !== undefined) {</span>
-<span class="cstat-no" title="statement not covered" >          throw (new Error('Fatal: ' + err.code));</span>
-        } else {
-<span class="cstat-no" title="statement not covered" >          throw (new Error('Fatal: Lambda function could not be run.'));</span>
+        return Promise.resolve(data.Payload);
+      } catch (err) { // lambda error, i.e. ResourceNotFound
+        if (err.code !== undefined) {
+          return Promise.reject(new Error('Error Code: ' + err.code));
         }
+        return Promise.reject(new Error('Fatal: Lambda function could not be run.'));
       }
     }
 }
@@ -175,7 +157,7 @@ export default AwsManager;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Jun 06 2020 21:37:08 GMT+0200 (Central European Summer Time)
+                at Wed Jun 10 2020 10:53:52 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

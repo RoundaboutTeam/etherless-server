@@ -1,3 +1,7 @@
+import { Contract } from 'ethers';
+
+const ethers = require('ethers');
+
 class EthSmartConfig {
     public readonly networkName: string;
 
@@ -12,6 +16,12 @@ class EthSmartConfig {
       this.privateKey = privateKey;
       this.contractAddress = contractAddress;
       this.contractAbi = abi;
+    }
+
+    createSmartContract(): Contract {
+      const provider = ethers.getDefaultProvider(this.networkName);
+      const wallet = new ethers.Wallet(this.privateKey, provider);
+      return new ethers.Contract(this.contractAddress, this.contractAbi, wallet);
     }
 }
 

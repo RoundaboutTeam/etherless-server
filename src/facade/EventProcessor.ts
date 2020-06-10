@@ -2,9 +2,6 @@ import IEventProcessor from './IEventProcessor';
 import EthSmartManager from '../smart/EthSmartManager';
 import AwsManager from '../aws/AwsManager';
 import RunEventData from '../event/RunEventData';
-import DeployEventData from '../event/DeployEventData';
-import EditEventData from '../event/EditEventData';
-import DeleteEventData from '../event/DeleteEventData';
 
 class EventProcessor implements IEventProcessor {
     private smartManager: EthSmartManager;
@@ -23,19 +20,10 @@ class EventProcessor implements IEventProcessor {
     async processRunEvent(data: RunEventData) {
       try {
         const result = await this.awsManager.invokeLambda(data.functionName, data.parameters);
-        this.smartManager.sendResponse(result, data.id);
+        this.smartManager.sendRunResult(result, data.id, true);
       } catch (err) {
-        this.smartManager.sendError(err.message, data.id);
+        this.smartManager.sendRunResult(err.message, data.id, false);
       }
-    }
-
-    async processDeployEvent(data: DeployEventData) {
-    }
-
-    async processEditEvent(data: EditEventData) {
-    }
-
-    async processDeleteEvent(data: DeleteEventData) {
     }
 }
 
