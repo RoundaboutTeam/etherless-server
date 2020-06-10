@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1591779232502" clover="3.2.0">
-  <project timestamp="1591779232503" name="All files">
-    <metrics statements="81" coveredstatements="79" conditionals="14" coveredconditionals="14" methods="26" coveredmethods="24" elements="121" coveredelements="117" complexity="0" loc="81" ncloc="81" packages="4" files="7" classes="7"/>
+<coverage generated="1591779424679" clover="3.2.0">
+  <project timestamp="1591779424679" name="All files">
+    <metrics statements="79" coveredstatements="77" conditionals="14" coveredconditionals="14" methods="26" coveredmethods="24" elements="119" coveredelements="115" complexity="0" loc="79" ncloc="79" packages="4" files="7" classes="7"/>
     <package name="aws">
       <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
       <file name="AwsManager.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\aws\AwsManager.ts">
@@ -67,9 +67,9 @@
       </file>
     </package>
     <package name="facade">
-      <metrics statements="14" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
+      <metrics statements="12" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
       <file name="EventProcessor.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\facade\EventProcessor.ts">
-        <metrics statements="14" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
+        <metrics statements="12" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
         <line num="6" count="1" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
@@ -79,11 +79,9 @@
         <line num="20" count="1" type="stmt"/>
         <line num="22" count="3" type="stmt"/>
         <line num="23" count="1" type="stmt"/>
-        <line num="24" count="1" type="stmt"/>
-        <line num="25" count="1" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
         <line num="30" count="1" type="stmt"/>
-        <line num="32" count="1" type="stmt"/>
       </file>
     </package>
     <package name="smart">
