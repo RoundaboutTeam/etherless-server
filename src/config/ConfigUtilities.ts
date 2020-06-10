@@ -3,6 +3,7 @@ import path from 'path';
 import EthSmartConfig from './EthSmartConfig';
 import AwsConfig from './AwsConfig';
 
+// provides configuration objects created based on the content of the configuration files
 class ConfigUtilities {
   private static smartConfigPath: string = path.resolve(__dirname, '..', '..', 'configs', 'smartConfig.json');
 

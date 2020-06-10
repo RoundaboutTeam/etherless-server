@@ -5,18 +5,16 @@ jest.mock('aws-sdk');
 
 const AWS = require('aws-sdk');
 
-
 const lambdaMock = new AWS.Lambda();
 const awsManager = new AwsManager(lambdaMock);
 
-
-test('correctly returns valid lambda response', async () => {
+test('correctly returns valid lambda responses', async () => {
   AWS.mockInvokePromise(lambdaMock, Promise.resolve({ Payload: '15' }));
   try {
     const result = await awsManager.invokeLambda('existingFunction', ['2', '3']);
     expect(result).toBe('15');
   } catch (err) {
-    throw new Error('test failed with error: ' + err);
+    throw new Error(`test failed with error: ${err}`);
   }
 });
 
@@ -63,4 +61,3 @@ test('correctly handles a generic Fatal Lambda error which does not have an erro
     expect(err.message).toBe('Fatal: Lambda function could not be run.');
   }
 });
-
