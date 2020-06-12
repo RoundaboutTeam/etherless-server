@@ -1,12 +1,18 @@
 import { BigNumber } from 'ethers/utils';
+import IpfsManager from './src/ipfs/IpfsManager';
+
+const fs = require('fs');
 
 const ethers = require('ethers');
 
 class CliSimulator {
-  contract: any;
+  private contract: any;
 
-  constructor(contract: any) {
+  private ipfsManager: any;
+
+  constructor(contract: any, ipfsManager: IpfsManager) {
     this.contract = contract;
+    this.ipfsManager = ipfsManager;
 
     this.contract.on('resultOk', (response: string, id: BigNumber) => {
       console.log(`\nCaptured RUN response for CLI with:\n id: ${id} \n response: ${response} `);
@@ -22,6 +28,25 @@ class CliSimulator {
       const tx = await this.contract.runFunction(function_name, parameters, { value: ethers.utils.parseEther('0.0001') });
       await tx.wait();
     } catch (error) { console.log('runFunction Error:\n', error); }
+  }
+
+  async deployFunction(filePath: string, function_name: any, parameters_signature: string, description: string) {
+    try {
+      await fs.readFile(filePath, async (err: any, data: any) => {
+        if (err) {
+          console.log(err);
+        } else {
+          try {
+            const ipfsPath = await this.ipfsManager.saveOnIpfs(data);
+            const tx = await this.contract.deployFunction(function_name, parameters_signature, description, ipfsPath, { value: ethers.utils.parseEther('0.0001') });
+            await tx.wait();
+            console.log('deploy transaction mined');
+          } catch (error) {
+            console.log('deployFunction error: ', error);
+          }
+        }
+      });
+    } catch (error) { console.log('deployFunction Error:\n', error); }
   }
 
   async getList() {

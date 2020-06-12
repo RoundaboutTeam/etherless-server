@@ -41,9 +41,9 @@ class EventProcessor implements IEventProcessor {
     // attached to the SmartManager's deploy dispatcher
     async processDeployEvent(data: DeployEventData) {
       try {
-
+        const fileBuffer = await this.ipfsManager.getFileContent(data.ipfsPath);
       } catch (err) {
-        
+        this.smartManager.sendDeployResult(err.message, data.functionName, data.id, false);
       }
     }
 }
