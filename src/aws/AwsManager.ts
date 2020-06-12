@@ -10,7 +10,7 @@ class AwsManager {
     // asynchronously invokes a Lambda Function and resolves with a promise or rejects with an error
     async invokeLambda(functionName: string, params: Array<string>): Promise<string> {
       const parameters = {
-        FunctionName: `serverless-dev-${functionName}`,
+        FunctionName: `etherless-server-dev-${functionName}`,
         Payload: JSON.stringify({ parameters: params }),
       };
       try {
@@ -29,7 +29,7 @@ class AwsManager {
     }
 
     async deployFunction(functionName: string, parametersCount: number, fileBuffer: Buffer): Promise<string> {
-      
+      return Promise.reject('y');
     }
 }
 

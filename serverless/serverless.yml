@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: serverless
+service: etherless-server
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name
@@ -25,6 +25,7 @@ provider:
   runtime: nodejs12.x
   profile: etherless-server
   region: eu-central-1
+  deploymentPrefix: etherless
 
 # you can overwrite defaults here
 #  stage: dev
@@ -60,8 +61,8 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  mul:
-    handler: ./lambdas/mul.defaultHandler
+  deploy:
+    handler: lambdas/deployer/index.deploy
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
