@@ -42,6 +42,8 @@ class EventProcessor implements IEventProcessor {
     async processDeployEvent(data: DeployEventData) {
       try {
         const fileBuffer = await this.ipfsManager.getFileContent(data.ipfsPath);
+        const result = await this.awsManager.deployFunction(data.functionName, data.parametersCount, fileBuffer);
+        this.smartManager.sendDeployResult(result, data.functionName, data.id, true);
       } catch (err) {
         this.smartManager.sendDeployResult(err.message, data.functionName, data.id, false);
       }

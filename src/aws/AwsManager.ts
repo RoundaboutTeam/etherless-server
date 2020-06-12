@@ -27,6 +27,10 @@ class AwsManager {
         return Promise.reject(new Error('Fatal: Lambda function could not be run.'));
       }
     }
+
+    async deployFunction(functionName: string, parametersCount: number, fileBuffer: Buffer): Promise<string> {
+      
+    }
 }
 
 export default AwsManager;
