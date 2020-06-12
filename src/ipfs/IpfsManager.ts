@@ -3,8 +3,8 @@ const IPFS = require('ipfs-mini');
 class IpfsManager {
   private ipfs : any;
 
-  constructor() {
-    this.ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+  constructor(ipfsObject: any) {
+    this.ipfs = ipfsObject;
   }
 
   public async getFileContent(ipfsPath : string) : Promise<Buffer> {

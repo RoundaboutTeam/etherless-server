@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import EthSmartConfig from './EthSmartConfig';
 import AwsConfig from './AwsConfig';
+import IpfsConfig from './IpfsConfig';
 
 // provides configuration objects created based on the content of the configuration files
 class ConfigUtilities {
@@ -10,6 +11,8 @@ class ConfigUtilities {
   private static abiPath: string = path.resolve(__dirname, '..', '..', 'configs', 'abi.json');
 
   private static awsConfigPath: string = path.resolve(__dirname, '..', '..', 'configs', 'awsConfig.json');
+
+  private static ipfsConfigPath: string = path.resolve(__dirname, '..', '..', 'configs', 'ipfsConfig.json');
 
   public static getEthSmartConfig() {
     const config = JSON.parse(fs.readFileSync(this.smartConfigPath, 'UTF-8'));
@@ -20,6 +23,11 @@ class ConfigUtilities {
   public static getAwsConfig() {
     const config = JSON.parse(fs.readFileSync(this.awsConfigPath, 'UTF-8'));
     return new AwsConfig(config.awsKey, config.awsSecretKey, config.awsRegion);
+  }
+
+  public static getIpfsConfig() {
+    const config = JSON.parse(fs.readFileSync(this.ipfsConfigPath, 'UTF-8'));
+    return new IpfsConfig(config.host, config.port, config.protocol);
   }
 }
 
