@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1591799102757" clover="3.2.0">
-  <project timestamp="1591799102757" name="All files">
+<coverage generated="1591955302406" clover="3.2.0">
+  <project timestamp="1591955302406" name="All files">
     <metrics statements="79" coveredstatements="77" conditionals="14" coveredconditionals="14" methods="26" coveredmethods="24" elements="119" coveredelements="115" complexity="0" loc="79" ncloc="79" packages="4" files="7" classes="7"/>
     <package name="aws">
       <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
@@ -8,17 +8,17 @@
         <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
         <line num="3" count="2" type="stmt"/>
         <line num="7" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="11" count="7" type="stmt"/>
-        <line num="16" count="7" type="stmt"/>
-        <line num="18" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="23" count="5" type="cond" truecount="2" falsecount="0"/>
-        <line num="24" count="3" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="29" count="2" type="stmt"/>
-        <line num="31" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="7" type="stmt"/>
+        <line num="17" count="7" type="stmt"/>
+        <line num="19" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="24" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
       </file>
     </package>
     <package name="event">
@@ -26,9 +26,9 @@
       <file name="EventData.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\event\EventData.ts">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="3" count="3" type="stmt"/>
-        <line num="7" count="5" type="stmt"/>
-        <line num="9" count="3" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
         <line num="11" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
       </file>
       <file name="EventDispatcher.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\event\EventDispatcher.ts">
         <metrics statements="22" coveredstatements="22" conditionals="6" coveredconditionals="6" methods="7" coveredmethods="7"/>
@@ -76,12 +76,12 @@
         <line num="13" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="22" count="3" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="25" count="2" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
         <line num="30" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
       </file>
     </package>
     <package name="smart">
@@ -95,23 +95,23 @@
         <line num="11" count="2" type="stmt"/>
         <line num="12" count="2" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
-        <line num="17" count="2" type="stmt"/>
-        <line num="18" count="5" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
         <line num="19" count="5" type="stmt"/>
-        <line num="24" count="2" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
+        <line num="20" count="5" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
       </file>
       <file name="SmartManager.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\smart\SmartManager.ts">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
         <line num="2" count="2" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
         <line num="9" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
         <line num="21" count="2" type="stmt"/>
-        <line num="23" count="2" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
       </file>
     </package>
   </project>
