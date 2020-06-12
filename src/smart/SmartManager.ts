@@ -17,7 +17,7 @@ abstract class SmartManager {
     abstract sendRunResult(response: string, id: BigNumber, error: boolean): void;
 
     // sends a deploy result to Etherless-smart
-    abstract sendRunResult(response: string, functionName: string, id: BigNumber, error: boolean): void;
+    abstract sendDeployResult(response: string, functionName: string, id: BigNumber, error: boolean): void;
 
     // allows callbacks to be subscribed to the run event dispatcher
     public onRun(callback: any) {

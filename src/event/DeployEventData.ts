@@ -6,7 +6,7 @@ class DeployEventData extends EventData {
 
     public readonly ipfsPath: string;
 
-    constructor(functionName: string, ipfsPath: string, id: BigNumber) {
+    constructor(functionName: string, parametersCount: number, ipfsPath: string, id: BigNumber) {
       super(id);
       this.functionName = functionName;
       this.ipfsPath = ipfsPath;

@@ -1,6 +1,7 @@
 import { Contract } from 'ethers';
 import { BigNumber } from 'ethers/utils';
 import RunEventData from '../event/RunEventData';
+import DeployEventData from '../event/DeployEventData';
 import SmartManager from './SmartManager';
 
 class EthereumSmartManager extends SmartManager {
@@ -12,12 +13,31 @@ class EthereumSmartManager extends SmartManager {
       this.contract.on('runRequest', (functionName: string, parameters: string, id: BigNumber) => {
         this.dispatchRunEvent(new RunEventData(functionName, parameters.split(','), id));
       });
+
+      // (p1, p2)
+      this.contract.on('deployRequest', (functionName: string, parametersSignature: string, ipfsPath: string, id: BigNumber) => {
+        const noParenthesis = parametersSignature.slice(1, parametersSignature.length - 1).trim();
+        let paramsCount = 0;
+        if (noParenthesis !== '') {
+          paramsCount = parametersSignature.split(',').length;
+        }
+        this.dispatchDeployEvent(new DeployEventData(functionName, paramsCount, ipfsPath, id));
+      });
     }
 
-    // sends the run result to Etherless-Smart or retires other n times if an exception is caught
-    sendRunResult(message: string, id: BigNumber, success: boolean) {
+    // sends a run result to Etherless-Smart or retires other n times if an exception is caught
+    sendRunResult(response: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.runResult(message, id, success);
+        this.contract.runResult(response, id, success);
+      } catch (err) {
+        // retry sending message again here
+      }
+    }
+
+    // sends a deploy result to Etherless-Smart or retires other n times if an exception is caught
+    sendDeployResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
+      try {
+        this.contract.deployResult(response, functionName, id, success);
       } catch (err) {
         // retry sending message again here
       }
