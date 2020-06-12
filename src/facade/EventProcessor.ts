@@ -16,6 +16,10 @@ class EventProcessor implements IEventProcessor {
       this.smartManager.onRun((data:RunEventData) => {
         this.processRunEvent(data);
       });
+
+      this.smartManager.onDeploy((data:DeployEventData) => {
+        this.processDeployEvent(data);
+      });
     }
 
     // orchestrates the processing of run events
@@ -29,11 +33,13 @@ class EventProcessor implements IEventProcessor {
       }
     }
 
+    // orchestrates the processing of deploy events
+    // attached to the SmartManager's deploy dispatcher
     async processDeployEvent(data: DeployEventData) {
       try {
 
       } catch (err) {
-
+        
       }
     }
 }
