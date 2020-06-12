@@ -1,21 +1,21 @@
-const IpfsClient = require('ipfs-http-client');
+const IPFS = require('ipfs-mini');
 
 class IpfsManager {
-    private ipfsClient;
+  private ipfs : any;
 
-    constructor() {
-      this.ipfsClient = new IpfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
-    }
+  constructor() {
+    this.ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+  }
 
-
-    // 
-    public async getFileContent(ipfsPath: string): Promise<string> {
-      const chunks = [];
-      for await (const chunk of this.ipfs.cat(ipfsPath)) {
-        chunks.push(chunk)
-      }
-      return Buffer.concat(chunks).toString();
-    }
+  public async getFileContent(ipfsPath : string) : Promise<Buffer> {
+    return new Promise((resolve, reject) => {
+      this.ipfs.cat(ipfsPath)
+        .then((result : string) => resolve(Buffer.from(result, 'hex')))
+        .catch((error : Error) => {
+          reject(new Error(`There was an error fetching the file from the given path: ${error}`));
+        });
+    });
+  }
 }
 
 export default IpfsManager;
