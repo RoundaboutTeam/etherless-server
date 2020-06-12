@@ -4,6 +4,8 @@ import AwsManager from './aws/AwsManager';
 import ConfigUtilities from './config/ConfigUtilities';
 import CliSimulator from '../CliSimulator';
 import IpfsManager from './ipfs/IpfsManager';
+import RunEventData from './event/RunEventData';
+import { BigNumber } from 'ethers/utils';
 
 // contract interface object used to listen events and send responses to Etherless-smart
 const contract = ConfigUtilities.getEthSmartConfig().createSmartContract();
@@ -26,3 +28,6 @@ const ipfsManager: IpfsManager = new IpfsManager(ipfs);
 // subscribes to the smartManager in order to receive and process the incoming events
 // and sends the results back to Etherless-smart
 const eventProcessor: EventProcessor = new EventProcessor(smartManager, awsManager, ipfsManager);
+
+// const cli = new CliSimulator(contract);
+// cli.runFunction('mul', '2, 5');
