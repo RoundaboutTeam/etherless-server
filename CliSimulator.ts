@@ -40,7 +40,7 @@ class CliSimulator {
             const ipfsPath = await this.ipfsManager.saveOnIpfs(data);
             const tx = await this.contract.deployFunction(function_name, parameters_signature, description, ipfsPath, { value: ethers.utils.parseEther('0.0001') });
             await tx.wait();
-            console.log('deploy transaction mined');
+            console.log('transaction mined');
           } catch (error) {
             console.log('deployFunction error: ', error);
           }

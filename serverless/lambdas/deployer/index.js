@@ -14,7 +14,7 @@ function injectDefaultHandler(content, functionName, parametersCount) {
     }
     params += `p[${i}]`;
   }
-  return `\nmodule.exports.defaultHandler = async event => {\n${p}  return { message: ${functionName}(${params}) };\n}\n${content}`;
+  return `\nmodule.exports.defaultHandler = async event => {\n${p}return { message: ${functionName}(${params}) };\n}\n${content}`;
 }
 
 // returns a buffer reppresenting the zip folder
@@ -27,7 +27,9 @@ async function buildZip(content) {
 }
 
 module.exports.deploy = async (event) => {
-  const fileContent = injectDefaultHandler(event.content, event.functionName, event.parametersCount);
+  const fixBuffer = Buffer.from(event.fileBuffer.data);
+
+  const fileContent = injectDefaultHandler(fixBuffer.toString('utf8'), event.functionName, event.parametersCount);
   const zipContent = await buildZip(fileContent);
 
   const params = {

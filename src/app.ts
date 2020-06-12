@@ -31,5 +31,4 @@ const eventProcessor: EventProcessor = new EventProcessor(smartManager, awsManag
 
 // const cli = new CliSimulator(contract, ipfsManager);
 // cli.runFunction('mul', '2, 5');
-
-// cli.deployFunction('./testF.js', 'echo4', '(word)', 'echoes whatever you say!');
+// cli.deployFunction('./testF.js', 'echoecho', '(word)', 'echoes whatever you say!');
