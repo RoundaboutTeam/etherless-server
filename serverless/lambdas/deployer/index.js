@@ -33,7 +33,7 @@ module.exports.deploy = async (event) => {
   const zipContent = await buildZip(fileContent);
 
   const params = {
-    FunctionName: event.functionName,
+    FunctionName: `etherless-server-dev-${event.functionName}`,
     Code: {
       ZipFile: zipContent,
     },

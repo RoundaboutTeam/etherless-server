@@ -1,3 +1,3 @@
-function aecho(word) {
+function cecho(word) {
   return word;
 };
