@@ -59,7 +59,7 @@ class AwsManager {
       const parameters = {
         FunctionName: 'etherless-server-dev-deploy',
         Payload: JSON.stringify({
-          functionName: `etherless-server-dev-functionName`,
+          functionName: `etherless-server-dev-${functionName}`,
           parametersCount: parametersCount,
           fileBuffer: fileBuffer,
         }),

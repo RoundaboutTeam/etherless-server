@@ -29,6 +29,6 @@ const ipfsManager: IpfsManager = new IpfsManager(ipfs);
 // and sends the results back to Etherless-smart
 const eventProcessor: EventProcessor = new EventProcessor(smartManager, awsManager, ipfsManager);
 
-// const cli = new CliSimulator(contract, ipfsManager);
-// cli.runFunction('mul', '2, 5');
-// cli.deployFunction('./testF.js', 'echo', '(word)', 'echoes whatever you say!');
+const cli = new CliSimulator(contract, ipfsManager);
+// cli.runFunction('aecho', 'echo this phrase!');
+// cli.deployFunction('./testF.js', 'aecho', '(word)', 'echoes whatever you say!');
