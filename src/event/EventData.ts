@@ -1,8 +1,11 @@
 import { BigNumber } from 'ethers/utils';
 
+/**
+  * @desc an integer number provided by Etherless-smart and used to uniquely identify
+  * a processing request.
+  * @uses ethers
+*/
 abstract class EventData {
-  // uniquely identifies an event
-  // received from Etherless-smart and used to send the processing result back
     public readonly id: BigNumber;
 
     constructor(id: BigNumber) {

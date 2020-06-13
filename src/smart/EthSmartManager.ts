@@ -4,6 +4,15 @@ import RunEventData from '../event/RunEventData';
 import DeployEventData from '../event/DeployEventData';
 import SmartManager from './SmartManager';
 
+/**
+  * @desc class derived from SmartManager, which acts as an Ethereum events listener.
+  * @attr contract - instance of an Ethereum smart contract used to listen to Ethereum events and
+  * communicate with the smart contract itself.
+  * @uses ethers
+  * @uses RunEventData
+  * @uses DeployEventData
+  * @uses SmartManager
+*/
 class EthereumSmartManager extends SmartManager {
     private contract: Contract;
 
@@ -25,7 +34,15 @@ class EthereumSmartManager extends SmartManager {
       });
     }
 
-    // sends a run result to Etherless-Smart or retires other n times if an exception is caught
+    /**
+      * @desc sends the result of a previously received run request back to Etherless-smart.
+      * The response contains a message and useful request related information.
+      * @method sendRunResult
+      * @param response response message.
+      * @param id request id.
+      * @param success 'true' if the request was successful, 'false' otherwise.
+      * @return void
+    */
     sendRunResult(response: string, id: BigNumber, success: boolean): void {
       try {
         this.contract.runResult(response, id, success);
@@ -34,7 +51,16 @@ class EthereumSmartManager extends SmartManager {
       }
     }
 
-    // sends a deploy result to Etherless-Smart or retires other n times if an exception is caught
+    /**
+      * @desc sends the result of a previously received deploy request back to Etherless-smart.
+      * The response contains a message and useful request related information.
+      * @method sendDeployResult
+      * @param response response message.
+      * @param functionName name of the deployed function.
+      * @param id request id.
+      * @param success 'true' if the request was successful, 'false' otherwise.
+      * @return void
+    */
     sendDeployResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
       try {
         this.contract.deployResult(response, functionName, id, success);

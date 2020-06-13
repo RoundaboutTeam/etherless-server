@@ -1,6 +1,12 @@
 import AWS, { Lambda } from 'aws-sdk';
 import { rejects } from 'assert';
 
+/**
+  * @desc class used to communicate with AWS Services, particularly with AWS Lambda.
+  * @attr lambda - service interface object used to interact with the AWS Lambda service.
+  * @uses aws-sdk
+*/
+
 class AwsManager {
     private lambda: AWS.Lambda;
 
@@ -8,7 +14,15 @@ class AwsManager {
       this.lambda = lambda;
     }
 
-    // asynchronously invokes a Lambda Function and resolves with a promise or rejects with an error
+    /**
+    * @async
+    * @desc invokes a Lambda function using the given function name and parameters,
+    * returning an asynchronous response or error message.
+    * @method invokeLambda
+    * @param functionName name of the function to be invoked.
+    * @param params parameters with which the function will be invoked.
+    * @return Promise<string> - invocation result or error message.
+    */
     async invokeLambda(functionName: string, params: Array<string>): Promise<string> {
       const parameters = {
         FunctionName: `etherless-server-dev-${functionName}`,
@@ -18,10 +32,12 @@ class AwsManager {
         const data: any = await this.lambda.invoke(parameters).promise();
         // runtime error in developer's code
         if (data.FunctionError) {
-          throw ({ code: data.Payload.errorMessage }); // caught by the next catch block
+        // caught by the next catch block
+          throw ({ code: data.Payload.errorMessage });
         }
         return Promise.resolve(data.Payload);
-      } catch (err) { // lambda error, i.e. ResourceNotFound
+      } catch (err) {
+        // lambda error, i.e. ResourceNotFound
         if (err.code !== undefined) {
           return Promise.reject(new Error(`Error Code: ${err.code}`));
         }
@@ -29,6 +45,16 @@ class AwsManager {
       }
     }
 
+    /**
+    * @async
+    * @desc invokes the AWSDeployer Lambda function using the name and the content 
+    * of the Lambda function to be deployed, returning an asynchronous response or error message.
+    * @method deployLambda
+    * @param functionName name of the function to be deployed.
+    * @param parametersCount number of parameters required by the function.
+    * @param fileBuffer Buffer containing a stringified version of the function to be deployed.
+    * @return Promise<string> - deployment success or error message.
+    */
     async deployFunction(functionName: string, parametersCount: number, fileBuffer: Buffer) {
       const parameters = {
         FunctionName: 'etherless-server-dev-deploy',
@@ -46,7 +72,8 @@ class AwsManager {
           throw ({ code: data.Payload.errorMessage }); // caught by the next catch block
         }
         return Promise.resolve(data.Payload);
-      } catch (err) { // lambda error, i.e. ResourceNotFound
+      } catch (err) {
+        // lambda error, i.e. ResourceNotFound
         if (err.code !== undefined) {
           return Promise.reject(new Error(`Error Code: ${err.code}`));
         }
