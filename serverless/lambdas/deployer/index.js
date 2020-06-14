@@ -6,7 +6,7 @@ const AWS = require('aws-sdk');
 const Lambda = require('aws-sdk/clients/lambda');
 
 function injectDefaultHandler(content, functionName, parametersCount) {
-  const p = 'const p = event.parameters;\n';
+  const p = 'const p = event.parameters;';
   let params = '';
   for (let i = 0; i < parametersCount; i += 1) {
     if (i !== 0) {
@@ -14,7 +14,15 @@ function injectDefaultHandler(content, functionName, parametersCount) {
     }
     params += `p[${i}]`;
   }
-  return `\nmodule.exports.defaultHandler = async event => {\n${p}return { message: ${functionName}(${params}) };\n}\n${content}`;
+  return `module.exports.defaultHandler = async event => {
+    ${p}
+    try{
+      return ${functionName}(${params});
+    } catch(err) {
+      return err.message ? err.message : err;
+    }
+  }\n
+  ${content}`;
 }
 
 // returns a buffer reppresenting the zip folder
