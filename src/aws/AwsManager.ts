@@ -1,4 +1,6 @@
 import AWS, { Lambda } from 'aws-sdk';
+import { resolve } from 'path';
+import { rejects } from 'assert';
 
 /**
   * @desc class used to communicate with AWS Services, particularly with AWS Lambda.
@@ -26,7 +28,12 @@ class AwsManager {
         FunctionName: `etherless-server-dev-${functionName}`,
         Payload: JSON.stringify({ parameters: params }),
       };
-      return this.invokeHelper(parameters);
+      try {
+        const result: any = await this.invokeHelper(parameters);
+        return Promise.resolve(JSON.parse(result).message);
+      } catch (err) {
+        return Promise.reject(err);
+      }
     }
 
     /**
@@ -74,7 +81,7 @@ class AwsManager {
             const payload = JSON.parse(data.Payload);
             reject(`${payload.errorType}: ${payload.errorMessage}`);
           } else {
-            resolve(data.Payload?.toString());
+            resolve(data.Payload);
           }
         });
       });

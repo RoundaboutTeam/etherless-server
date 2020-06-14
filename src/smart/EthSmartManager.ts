@@ -45,7 +45,7 @@ class EthereumSmartManager extends SmartManager {
     */
     sendRunResult(response: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.runResult(JSON.stringify({ message: response }), id, success);
+        this.contract.runResult(`{ message: "${response}" }`, id, success);
       } catch (err) {
         // retry sending message again here
       }
@@ -63,7 +63,7 @@ class EthereumSmartManager extends SmartManager {
     */
     sendDeployResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.deployResult(JSON.stringify({ message: response }), functionName, id, success);
+        this.contract.deployResult(`{ message: "${response}" }`, functionName, id, success);
       } catch (err) {
         // retry sending message again here
       }

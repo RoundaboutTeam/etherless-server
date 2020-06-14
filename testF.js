@@ -1,3 +1,3 @@
-function fantasticFunction(word) {
+function repeatAfterMe(word) {
   return word;
 };

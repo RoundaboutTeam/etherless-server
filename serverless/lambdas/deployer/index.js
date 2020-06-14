@@ -17,9 +17,9 @@ function injectDefaultHandler(content, functionName, parametersCount) {
   return `module.exports.defaultHandler = async event => {
     ${p}
     try{
-      return ${functionName}(${params});
+      return { message: ${functionName}(${params}) };
     } catch(err) {
-      return err.message ? err.message : err;
+      return { message: err.message ? err.message : err };
     }
   }\n
   ${content}`;
