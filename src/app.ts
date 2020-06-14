@@ -30,5 +30,5 @@ const ipfsManager: IpfsManager = new IpfsManager(ipfs);
 const eventProcessor: EventProcessor = new EventProcessor(smartManager, awsManager, ipfsManager);
 
 // const cli = new CliSimulator(contract, ipfsManager);
-// cli.runFunction('cecho', 'echo this phrase!');
-// cli.deployFunction('./testF.js', 'cecho', '(word)', 'echoes whatever you say!');
+// cli.runFunction('eecho', 'echo this phrase!');
+// cli.deployFunction('./testF.js', 'eecho', '(word)', 'echoes whatever you say!');

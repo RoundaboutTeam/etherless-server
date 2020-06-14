@@ -6,7 +6,6 @@ import { rejects } from 'assert';
   * @attr lambda - service interface object used to interact with the AWS Lambda service.
   * @uses aws-sdk
 */
-
 class AwsManager {
     private lambda: AWS.Lambda;
 
@@ -28,21 +27,7 @@ class AwsManager {
         FunctionName: `etherless-server-dev-${functionName}`,
         Payload: JSON.stringify({ parameters: params }),
       };
-      try {
-        const data: any = await this.lambda.invoke(parameters).promise();
-        // runtime error in developer's code
-        if (data.FunctionError) {
-        // caught by the next catch block
-          throw ({ code: data.Payload.errorMessage });
-        }
-        return Promise.resolve(data.Payload);
-      } catch (err) {
-        // lambda error, i.e. ResourceNotFound
-        if (err.code !== undefined) {
-          return Promise.reject(new Error(`Error Code: ${err.code}`));
-        }
-        return Promise.reject(new Error('Fatal: Lambda function could not be run.'));
-      }
+      return this.invokeHelper(parameters);
     }
 
     /**
@@ -64,31 +49,31 @@ class AwsManager {
           fileBuffer: fileBuffer,
         }),
       };
+      return this.invokeHelper(parameters);
+    }
 
-      try {
-        const data: any = await this.lambda.invoke(parameters).promise();
-        // runtime error in developer's code
-        if (data.FunctionError) {
-          throw ({ code: data.Payload.errorMessage }); // caught by the next catch block
-        }
-        return Promise.resolve(data.Payload);
-      } catch (err) {
-        // lambda error, i.e. ResourceNotFound
-        if (err.code !== undefined) {
-          return Promise.reject(new Error(`Error Code: ${err.code}`));
-        }
-        return Promise.reject(new Error('Fatal: Lambda function could not be deployed.'));
-      }
-
-      /*
-      this.lambda.invoke(parameters, (err: AWS.AWSError, data:AWS.Lambda.InvocationResponse) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(data);
-        }
+    /**
+    * @async
+    * @desc invokes a Lambda function using the given parameters,
+    * returning aa promise that will either resolve or reject.
+    * @method invokeHelper
+    * @param parameters contains the name of the Lambda function to be invoked
+    * and the parameters required
+    * @return Promise<string> - invocation result or error message.
+    */
+    private async invokeHelper(parameters: any): Promise<string> {
+      return new Promise((resolve, reject) => {
+        this.lambda.invoke(parameters, (err, data: any) => {
+          if (err) {
+            reject(err.message);
+          } else if (data.FunctionError) {
+            const payload = JSON.parse(data.Payload);
+            reject(`${payload.errorType}: ${payload.errorMessage}`);
+          } else {
+            resolve(data.Payload?.toString());
+          }
+        });
       });
-      */
     }
 }
 
