@@ -1,3 +1,3 @@
-function eecho(word) {
+function hecho(word) {
   return word;
 };

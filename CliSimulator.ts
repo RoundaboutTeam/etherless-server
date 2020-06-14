@@ -15,11 +15,11 @@ class CliSimulator {
     this.ipfsManager = ipfsManager;
 
     this.contract.on('resultOk', (response: string, id: BigNumber) => {
-      console.log(`\nCaptured RUN response for CLI with:\n id: ${id} \n response: ${response} `);
+      console.log(`\nCaptured response for CLI with:\n id: ${id} \n response: ${response} `);
     });
 
     this.contract.on('resultError', (response: string, id: BigNumber) => {
-      console.log(`\nCaptured RUN ERROR for CLI with:\n id: ${id} \n response: ${response} `);
+      console.log(`\nCaptured ERROR for CLI with:\n id: ${id} \n response: ${response} `);
     });
   }
 

@@ -49,7 +49,12 @@ class AwsManager {
           fileBuffer: fileBuffer,
         }),
       };
-      return this.invokeHelper(parameters);
+      try {
+        await this.invokeHelper(parameters);
+        return Promise.resolve(`${functionName} deployed successfully`);
+      } catch (err) {
+        return Promise.reject(new Error(`Function with name ${functionName} could not be deployed`));
+      }
     }
 
     /**
