@@ -63,7 +63,7 @@ class EthereumSmartManager extends SmartManager {
     */
     sendDeployResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.deployResult(response, functionName, id, success);
+        this.contract.deployResult(JSON.stringify({ message: response }), functionName, id, success);
       } catch (err) {
         // retry sending message again here
       }

@@ -1,5 +1,4 @@
 import AWS, { Lambda } from 'aws-sdk';
-import { rejects } from 'assert';
 
 /**
   * @desc class used to communicate with AWS Services, particularly with AWS Lambda.
