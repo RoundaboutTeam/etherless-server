@@ -81,7 +81,7 @@ class AwsManager {
         FunctionName: `etherless-server-dev-${functionName}`,
       };
       try {
-        await this.lambda.deleteFunction().promise();
+        await this.lambda.deleteFunction(parameters).promise();
         return Promise.resolve(`${functionName} deleted successfully`);
       } catch (err) {
         return Promise.reject(new Error(`Function with name ${functionName} could not be deleted`));
