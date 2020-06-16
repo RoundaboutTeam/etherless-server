@@ -2,6 +2,7 @@ import { Contract } from 'ethers';
 import { BigNumber } from 'ethers/utils';
 import RunEventData from '../event/RunEventData';
 import DeployEventData from '../event/DeployEventData';
+import DeleteEventData from '../event/DeleteEventData';
 import SmartManager from './SmartManager';
 
 /**
@@ -11,6 +12,7 @@ import SmartManager from './SmartManager';
   * @uses ethers
   * @uses RunEventData
   * @uses DeployEventData
+  * @uses DeleteEventData
   * @uses SmartManager
 */
 class EthereumSmartManager extends SmartManager {
@@ -31,6 +33,10 @@ class EthereumSmartManager extends SmartManager {
           paramsCount = parametersSignature.split(',').length;
         }
         this.dispatchDeployEvent(new DeployEventData(functionName, paramsCount, ipfsPath, id));
+      });
+
+      this.contract.on('deleteRequest', (functionName: string, id: BigNumber) => {
+        this.dispatchDeleteEvent(new DeleteEventData(functionName, id));
       });
     }
 
@@ -64,6 +70,14 @@ class EthereumSmartManager extends SmartManager {
     sendDeployResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
       try {
         this.contract.deployResult(`{ "message": "${response}" }`, functionName, id, success);
+      } catch (err) {
+        // retry sending message again here
+      }
+    }
+
+    sendDeleteResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
+      try {
+        this.contract.deleteResult(`{ message: "${response}" }`, functionName, id, success);
       } catch (err) {
         // retry sending message again here
       }
