@@ -90,3 +90,29 @@ test('correctly handles error in createFunction invocation from the Deployer', a
   }
 });
 
+
+
+
+
+
+
+
+test('correctly returns valid lambda delete responses', async () => {
+  AWS.mockDeletePromise(lambdaMock, Promise.resolve());
+  try {
+    const result = await awsManager.deleteLambda('someFunctionName');
+    expect(result).toBe('someFunctionName deleted successfully');
+  } catch (err) {
+    throw new Error(`test failed with error: ${err}`);
+  }
+});
+
+test('correctly handles error in deleteFunction invocation', async () => {
+  AWS.mockDeletePromise(lambdaMock, Promise.reject(new Error('ResourceNotFound exception')));
+  expect.assertions(1);
+  try {
+    await awsManager.deleteLambda('nonExisitngFunctionName');
+  } catch (err) {
+    expect(err.message).toBe('Function with name nonExisitngFunctionName could not be deleted');
+  }
+});

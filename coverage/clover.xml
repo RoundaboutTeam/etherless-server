@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1592263591316" clover="3.2.0">
-  <project timestamp="1592263591316" name="All files">
-    <metrics statements="133" coveredstatements="125" conditionals="20" coveredconditionals="18" methods="44" coveredmethods="40" elements="197" coveredelements="183" complexity="0" loc="133" ncloc="133" packages="5" files="9" classes="9"/>
+<coverage generated="1592343740394" clover="3.2.0">
+  <project timestamp="1592343740394" name="All files">
+    <metrics statements="161" coveredstatements="151" conditionals="22" coveredconditionals="20" methods="53" coveredmethods="47" elements="236" coveredelements="218" complexity="0" loc="161" ncloc="161" packages="5" files="10" classes="10"/>
     <package name="aws">
-      <metrics statements="22" coveredstatements="22" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
-      <file name="AwsManager.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\aws\AwsManager.ts">
-        <metrics statements="22" coveredstatements="22" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
+      <metrics statements="27" coveredstatements="27" conditionals="6" coveredconditionals="6" methods="5" coveredmethods="5"/>
+      <file name="AwsManager.ts" path="C:\Users\Tony\Desktop\etherless-server\src\aws\AwsManager.ts">
+        <metrics statements="27" coveredstatements="27" conditionals="6" coveredconditionals="6" methods="5" coveredmethods="5"/>
         <line num="7" count="2" type="stmt"/>
         <line num="11" count="2" type="stmt"/>
         <line num="23" count="2" type="stmt"/>
@@ -26,42 +26,56 @@
         <line num="64" count="1" type="stmt"/>
         <line num="65" count="2" type="stmt"/>
         <line num="67" count="3" type="stmt"/>
-        <line num="70" count="2" type="stmt"/>
-        <line num="72" count="2" type="stmt"/>
+        <line num="79" count="2" type="stmt"/>
+        <line num="80" count="4" type="stmt"/>
+        <line num="84" count="8" type="stmt"/>
+        <line num="85" count="2" type="stmt"/>
+        <line num="87" count="2" type="stmt"/>
+        <line num="90" count="2" type="stmt"/>
+        <line num="92" count="2" type="stmt"/>
       </file>
     </package>
     <package name="event">
-      <metrics statements="41" coveredstatements="41" conditionals="10" coveredconditionals="10" methods="13" coveredmethods="13"/>
-      <file name="DeployEventData.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\event\DeployEventData.ts">
+      <metrics statements="47" coveredstatements="47" conditionals="12" coveredconditionals="12" methods="15" coveredmethods="15"/>
+      <file name="DeleteEventData.ts" path="C:\Users\Tony\Desktop\etherless-server\src\event\DeleteEventData.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+      </file>
+      <file name="DeployEventData.ts" path="C:\Users\Tony\Desktop\etherless-server\src\event\DeployEventData.ts">
         <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="2" count="2" type="stmt"/>
         <line num="14" count="2" type="stmt"/>
-        <line num="22" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="23" count="3" type="stmt"/>
-        <line num="24" count="3" type="stmt"/>
-        <line num="25" count="3" type="stmt"/>
+        <line num="22" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
         <line num="27" count="2" type="stmt"/>
         <line num="29" count="2" type="stmt"/>
       </file>
-      <file name="EventData.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\event\EventData.ts">
+      <file name="EventData.ts" path="C:\Users\Tony\Desktop\etherless-server\src\event\EventData.ts">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="8" count="3" type="stmt"/>
-        <line num="12" count="7" type="stmt"/>
+        <line num="12" count="10" type="stmt"/>
         <line num="14" count="3" type="stmt"/>
         <line num="16" count="3" type="stmt"/>
       </file>
-      <file name="EventDispatcher.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\event\EventDispatcher.ts">
+      <file name="EventDispatcher.ts" path="C:\Users\Tony\Desktop\etherless-server\src\event\EventDispatcher.ts">
         <metrics statements="22" coveredstatements="22" conditionals="6" coveredconditionals="6" methods="7" coveredmethods="7"/>
         <line num="10" count="3" type="stmt"/>
-        <line num="14" count="5" type="stmt"/>
+        <line num="14" count="7" type="stmt"/>
         <line num="23" count="3" type="stmt"/>
-        <line num="24" count="11" type="stmt"/>
-        <line num="25" count="11" type="stmt"/>
+        <line num="24" count="13" type="stmt"/>
+        <line num="25" count="13" type="stmt"/>
         <line num="26" count="16" type="cond" truecount="2" falsecount="0"/>
         <line num="27" count="1" type="stmt"/>
-        <line num="30" count="11" type="cond" truecount="2" falsecount="0"/>
-        <line num="31" count="10" type="stmt"/>
-        <line num="32" count="10" type="stmt"/>
+        <line num="30" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="31" count="12" type="stmt"/>
+        <line num="32" count="12" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
         <line num="43" count="3" type="stmt"/>
         <line num="44" count="2" type="stmt"/>
@@ -70,12 +84,12 @@
         <line num="47" count="1" type="stmt"/>
         <line num="50" count="1" type="stmt"/>
         <line num="60" count="3" type="stmt"/>
-        <line num="61" count="3" type="stmt"/>
-        <line num="62" count="7" type="stmt"/>
+        <line num="61" count="4" type="stmt"/>
+        <line num="62" count="8" type="stmt"/>
         <line num="65" count="3" type="stmt"/>
         <line num="67" count="3" type="stmt"/>
       </file>
-      <file name="RunEventData.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\event\RunEventData.ts">
+      <file name="RunEventData.ts" path="C:\Users\Tony\Desktop\etherless-server\src\event\RunEventData.ts">
         <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="2" count="3" type="stmt"/>
         <line num="12" count="3" type="stmt"/>
@@ -87,34 +101,40 @@
       </file>
     </package>
     <package name="facade">
-      <metrics statements="20" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="4"/>
-      <file name="EventProcessor.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\facade\EventProcessor.ts">
-        <metrics statements="20" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="4"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
+      <metrics statements="26" coveredstatements="23" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="5"/>
+      <file name="EventProcessor.ts" path="C:\Users\Tony\Desktop\etherless-server\src\facade\EventProcessor.ts">
+        <metrics statements="26" coveredstatements="23" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="5"/>
+        <line num="23" count="1" type="stmt"/>
         <line num="30" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
         <line num="33" count="1" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="49" count="1" type="stmt"/>
-        <line num="51" count="2" type="stmt"/>
-        <line num="52" count="1" type="stmt"/>
-        <line num="54" count="1" type="stmt"/>
-        <line num="65" count="1" type="stmt"/>
-        <line num="67" count="2" type="stmt"/>
-        <line num="68" count="2" type="stmt"/>
-        <line num="69" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
         <line num="71" count="1" type="stmt"/>
-        <line num="74" count="1" type="stmt"/>
-        <line num="76" count="1" type="stmt"/>
+        <line num="73" count="2" type="stmt"/>
+        <line num="74" count="2" type="stmt"/>
+        <line num="75" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
+        <line num="90" count="2" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
       </file>
     </package>
     <package name="ipfs">
       <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="9" coveredmethods="9"/>
-      <file name="IpfsManager.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\ipfs\IpfsManager.ts">
+      <file name="IpfsManager.ts" path="C:\Users\Tony\Desktop\etherless-server\src\ipfs\IpfsManager.ts">
         <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="9" coveredmethods="9"/>
         <line num="1" count="2" type="stmt"/>
         <line num="10" count="2" type="stmt"/>
@@ -133,48 +153,59 @@
       </file>
     </package>
     <package name="smart">
-      <metrics statements="36" coveredstatements="30" conditionals="4" coveredconditionals="2" methods="12" coveredmethods="10"/>
-      <file name="EthSmartManager.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\smart\EthSmartManager.ts">
-        <metrics statements="22" coveredstatements="16" conditionals="4" coveredconditionals="2" methods="6" coveredmethods="4"/>
+      <metrics statements="47" coveredstatements="40" conditionals="4" coveredconditionals="2" methods="16" coveredmethods="13"/>
+      <file name="EthSmartManager.ts" path="C:\Users\Tony\Desktop\etherless-server\src\smart\EthSmartManager.ts">
+        <metrics statements="28" coveredstatements="21" conditionals="4" coveredconditionals="2" methods="8" coveredmethods="5"/>
         <line num="3" count="2" type="stmt"/>
         <line num="4" count="2" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="20" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="22" count="2" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="22" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
+        <line num="32" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="33" count="0" type="stmt"/>
-        <line num="46" count="2" type="stmt"/>
-        <line num="47" count="4" type="stmt"/>
-        <line num="48" count="4" type="stmt"/>
-        <line num="64" count="2" type="stmt"/>
-        <line num="65" count="4" type="stmt"/>
-        <line num="66" count="4" type="stmt"/>
-        <line num="71" count="2" type="stmt"/>
-        <line num="73" count="2" type="stmt"/>
-      </file>
-      <file name="SmartManager.ts" path="C:\Users\Tony\Desktop\etherless-server v0.0.2\src\smart\SmartManager.ts">
-        <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="25" count="2" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="58" count="2" type="stmt"/>
-        <line num="59" count="2" type="stmt"/>
-        <line num="68" count="2" type="stmt"/>
-        <line num="69" count="2" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="53" count="4" type="stmt"/>
+        <line num="54" count="4" type="stmt"/>
+        <line num="70" count="2" type="stmt"/>
+        <line num="71" count="5" type="stmt"/>
+        <line num="72" count="5" type="stmt"/>
         <line num="78" count="2" type="stmt"/>
-        <line num="79" count="1" type="stmt"/>
+        <line num="79" count="3" type="stmt"/>
+        <line num="80" count="3" type="stmt"/>
+        <line num="85" count="2" type="stmt"/>
+        <line num="87" count="2" type="stmt"/>
+      </file>
+      <file name="SmartManager.ts" path="C:\Users\Tony\Desktop\etherless-server\src\smart\SmartManager.ts">
+        <metrics statements="19" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="8"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="77" count="2" type="stmt"/>
+        <line num="78" count="2" type="stmt"/>
+        <line num="87" count="2" type="stmt"/>
         <line num="88" count="2" type="stmt"/>
-        <line num="89" count="1" type="stmt"/>
-        <line num="91" count="2" type="stmt"/>
-        <line num="93" count="2" type="stmt"/>
+        <line num="97" count="2" type="stmt"/>
+        <line num="98" count="2" type="stmt"/>
+        <line num="107" count="2" type="stmt"/>
+        <line num="108" count="1" type="stmt"/>
+        <line num="117" count="2" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="127" count="2" type="stmt"/>
+        <line num="128" count="1" type="stmt"/>
+        <line num="130" count="2" type="stmt"/>
+        <line num="132" count="2" type="stmt"/>
       </file>
     </package>
   </project>
