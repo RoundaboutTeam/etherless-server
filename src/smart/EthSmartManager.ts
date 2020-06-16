@@ -77,7 +77,7 @@ class EthereumSmartManager extends SmartManager {
 
     sendDeleteResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.deleteResult(`{ message: "${response}" }`, functionName, id, success);
+        this.contract.deleteResult(`{ "message": "${response}" }`, functionName, id, success);
       } catch (err) {
         // retry sending message again here
       }
