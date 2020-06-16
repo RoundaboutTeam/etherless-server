@@ -1,32 +1,26 @@
 import { BigNumber } from 'ethers/utils';
+import IpfsManager from './src/ipfs/IpfsManager';
+
+const fs = require('fs');
 
 const ethers = require('ethers');
 
 class CliSimulator {
-  contract: any;
+  private contract: any;
 
-  constructor(contract: any) {
+  private ipfsManager: any;
+
+  constructor(contract: any, ipfsManager: IpfsManager) {
     this.contract = contract;
+    this.ipfsManager = ipfsManager;
 
-    this.contract.on('response', (response: string, id: BigNumber) => {
-      console.log(`\nCaptured response for CLI with id ${id} :\n${response}`);
+    this.contract.on('resultOk', (response: string, id: BigNumber) => {
+      console.log(`\nCaptured response for CLI with:\n id: ${id} \n response: ${response} `);
     });
-  }
 
-  async addFunction(function_name: string, signature:string, price: any, description: string) {
-    try {
-      const tx = await this.contract.addFunction(function_name, signature, price, description);
-      await tx.wait();
-      console.log(`function ${function_name} was successfully added.`);
-    } catch (error) { console.log('addFunction Error:\n', error); }
-  }
-
-  async removeFunction(function_name: string) {
-    try {
-      const tx = await this.contract.removeFunction(function_name);
-      await tx.wait();
-      console.log(`function ${function_name} was successfully removed.`);
-    } catch (error) { console.log('removeFunction Error:\n', error); }
+    this.contract.on('resultError', (response: string, id: BigNumber) => {
+      console.log(`\nCaptured ERROR for CLI with:\n id: ${id} \n response: ${response} `);
+    });
   }
 
   async runFunction(function_name: any, parameters: any) {
@@ -36,11 +30,22 @@ class CliSimulator {
     } catch (error) { console.log('runFunction Error:\n', error); }
   }
 
-  async sendResponse(response: string, id: BigNumber) {
+  async deployFunction(filePath: string, function_name: any, parameters_signature: string, description: string) {
     try {
-      const tx = await this.contract.resultFunction(response, id);
-      await tx.wait();
-    } catch (error) { console.log('sendResponse Error:\n', error); }
+      await fs.readFile(filePath, async (err: any, data: any) => {
+        if (err) {
+          console.log(err);
+        } else {
+          try {
+            const ipfsPath = await this.ipfsManager.saveOnIpfs(data);
+            const tx = await this.contract.deployFunction(function_name, parameters_signature, description, ipfsPath, { value: ethers.utils.parseEther('0.0001') });
+            await tx.wait();
+          } catch (error) {
+            console.log('deployFunction error: ', error);
+          }
+        }
+      });
+    } catch (error) { console.log('deployFunction Error:\n', error); }
   }
 
   async getList() {

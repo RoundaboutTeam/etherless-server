@@ -1,10 +1,8 @@
-const { DEFAULT_ECDH_CURVE } = require("tls");
-
 jest.genMockFromModule('aws-sdk');
 const AWS = {
   Lambda: jest.fn().mockImplementation(() => {
     return {
-      invoke: jest.fn(() => { //mock impl here
+      invoke: jest.fn(() => {
         return {
           promise: jest.fn(() => {
             console.log('INVOKE PROMISE IS REJECTED BY DEFAULT');

@@ -1,0 +1,15 @@
+{
+  "name": "etherless-server",
+  "version": "0.0.3",
+  "description": "Manages etherless Serverless Functionalities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.695.0",
+    "jszip": "^3.4.0"
+  }
+}
