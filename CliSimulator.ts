@@ -48,6 +48,13 @@ class CliSimulator {
     } catch (error) { console.log('deployFunction Error:\n', error); }
   }
 
+  async deleteFunction(function_name: any) {
+    try {
+      const tx = await this.contract.deleteFunction(function_name, { value: ethers.utils.parseEther('0.0001') });
+      await tx.wait();
+    } catch (error) { console.log('deleteFunction Error:\n', error); }
+  }
+
   async getList() {
     try {
       console.log('Getting functions list..');

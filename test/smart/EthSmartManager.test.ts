@@ -26,7 +26,7 @@ test('dispatches run event', () => {
   try {
     smartManager.dispatchRunEvent(new RunEventData('', [], new BigNumber(1)));
   } catch (err) {
-    expect(err).toBeInstanceOf(Error);
+    throw new Error(`test failed with error: ${err}`);
   }
 });
 
@@ -46,6 +46,26 @@ test('dispatches deploy event', () => {
   try {
     smartManager.dispatchDeployEvent(new DeployEventData('', 2, '', new BigNumber(1)));
   } catch (err) {
-    expect(err).toBeInstanceOf(Error);
+    throw new Error(`test failed with error: ${err}`);
+  }
+});
+
+test('sendDeleteResult blockchain exception is captured and managed correctly', () => {
+  contract.runResult.mockImplementationOnce(() => { throw new Error('Blockchain Error'); });
+  smartManager.sendDeleteResult('ok response with blockchain exception', 'someName', new BigNumber(1), true);
+  expect(smartManager.sendDeployResult).not.toThrow();
+});
+
+test('adds delete callback', () => {
+  const result = smartManager.onDelete(() => {});
+  expect(result).toBe(true);
+});
+
+test('dispatches delete event', () => {
+  expect.assertions(0);
+  try {
+    smartManager.dispatchDeleteEvent(new DeployEventData('', 2, '', new BigNumber(1)));
+  } catch (err) {
+    throw new Error(`test failed with error: ${err}`);
   }
 });

@@ -5,6 +5,7 @@ import AwsManager from '../../src/aws/AwsManager';
 import IpfsManager from '../../src/ipfs/IpfsManager';
 import RunEventData from '../../src/event/RunEventData';
 import DeployEventData from '../../src/event/DeployEventData';
+import DeleteEventData from '../../src/event/DeleteEventData';
 
 const ethers = require('ethers');
 const AWS = require('aws-sdk');
@@ -68,7 +69,6 @@ test('processes deploy valid result correctly', async () => {
   }
 });
 
-
 test('processes deploy exception correctly', async () => {
   jest.spyOn(smartManager, 'sendDeployResult');
   const error = {
@@ -80,6 +80,29 @@ test('processes deploy exception correctly', async () => {
   try {
     await processor.processDeployEvent(new DeployEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
     expect(smartManager.sendDeployResult).toBeCalledWith(expect.anything(), expect.anything(), expect.anything(), false);
+  } catch (err) {
+    throw new Error(`test failed with error: ${err}`);
+  }
+});
+
+test('processes delete valid result correctly', async () => {
+  jest.spyOn(smartManager, 'sendDeleteResult');
+  AWS.mockDeletePromise(lambdaMock, Promise.resolve());
+  try {
+    await processor.processDeleteEvent(new DeleteEventData('someFunctionName', new BigNumber(1)));
+    expect(smartManager.sendDeleteResult).toBeCalledWith(expect.anything(), expect.anything(), expect.anything(), true);
+  } catch (err) {
+    throw new Error(`test failed with error: ${err}`);
+  }
+});
+
+test('processes delete exception correctly', async () => {
+  
+  jest.spyOn(smartManager, 'sendDeleteResult');
+  AWS.mockDeletePromise(lambdaMock, Promise.reject(new Error('ResourceNotFound exception')));
+  try {
+    await processor.processDeleteEvent(new DeleteEventData('nonExistingFunctionName', new BigNumber(1)));
+    expect(smartManager.sendDeleteResult).toBeCalledWith(expect.anything(), expect.anything(), expect.anything(), false);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }

@@ -67,6 +67,26 @@ class AwsManager {
         return Promise.reject(new Error(err.message));
       }
     }
+
+    /**
+    * @async
+    * @desc deletes a Lambda function using the given function name,
+    * returning an asynchronous response or error message.
+    * @method deleteLambda
+    * @param functionName name of the function to be deleted.
+    * @return Promise<string> - deletion success or error message.
+    */
+    async deleteLambda(functionName: string): Promise<string> {
+      const parameters = {
+        FunctionName: `etherless-server-dev-${functionName}`,
+      };
+      try {
+        await this.lambda.deleteFunction(parameters).promise();
+        return Promise.resolve(`${functionName} deleted successfully`);
+      } catch (err) {
+        return Promise.reject(new Error(`Function with name ${functionName} could not be deleted`));
+      }
+    }
 }
 
 export default AwsManager;

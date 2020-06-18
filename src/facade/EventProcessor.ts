@@ -4,6 +4,7 @@ import AwsManager from '../aws/AwsManager';
 import IpfsManager from '../ipfs/IpfsManager';
 import RunEventData from '../event/RunEventData';
 import DeployEventData from '../event/DeployEventData';
+import DeleteEventData from '../event/DeleteEventData';
 
 /**
   * @desc class used to orchestrate the steps of the requests processing.
@@ -17,6 +18,7 @@ import DeployEventData from '../event/DeployEventData';
   * @uses IpfsManager
   * @uses RunEventData
   * @uses DeployEventData
+  * @uses DeleteEventData
 */
 class EventProcessor implements IEventProcessor {
     private smartManager: EthSmartManager;
@@ -36,6 +38,10 @@ class EventProcessor implements IEventProcessor {
       // The method processDeployEvent is set to be executed upon listening to a DeployEvent.
       this.smartManager.onDeploy((data:DeployEventData) => {
         this.processDeployEvent(data);
+      });
+      // The method processDeleteEvent is set to be executed upon listening to a DeleteEvent.
+      this.smartManager.onDelete((data:DeleteEventData) => {
+        this.processDeleteEvent(data);
       });
     }
 
@@ -69,6 +75,22 @@ class EventProcessor implements IEventProcessor {
         this.smartManager.sendDeployResult(result, data.functionName, data.id, true);
       } catch (err) {
         this.smartManager.sendDeployResult(err.message, data.functionName, data.id, false);
+      }
+    }
+
+    /**
+    * @async
+    * @desc processes the given DeleteEventData object by calling the AWSManager class.
+    * @method processDeleteEvent
+    * @param data DeleteEventData class object, content of the request to be processed.
+    * @return Promise<string> - delete result or error message.
+    */
+    async processDeleteEvent(data: DeleteEventData) {
+      try {
+        const result = await this.awsManager.deleteLambda(data.functionName);
+        this.smartManager.sendDeleteResult(result, data.functionName, data.id, true);
+      } catch (err) {
+        this.smartManager.sendDeleteResult(err.message, data.functionName, data.id, false);
       }
     }
 }
