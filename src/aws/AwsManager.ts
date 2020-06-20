@@ -84,7 +84,7 @@ class AwsManager {
         await this.lambda.deleteFunction(parameters).promise();
         return Promise.resolve(`${functionName} deleted successfully`);
       } catch (err) {
-        return Promise.reject(new Error(`Function with name ${functionName} could not be deleted`));
+        return Promise.reject(new Error(`${functionName} could not be deleted`));
       }
     }
 

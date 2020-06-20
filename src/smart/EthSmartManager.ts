@@ -119,7 +119,7 @@ class EthereumSmartManager extends SmartManager {
       * @param parametersSignature - string representing the parameters signature.
       * @return number - the number of parameters in the parameters signature string.
     */
-    private static getParametersCount(parametersSignature: string): number {
+    static getParametersCount(parametersSignature: string): number {
       const noParenthesis = parametersSignature.slice(1, parametersSignature.length - 1).trim();
       let paramsCount = 0;
       if (noParenthesis !== '') {

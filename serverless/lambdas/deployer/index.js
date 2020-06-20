@@ -34,6 +34,7 @@ async function buildZip(content) {
   return c;
 }
 
+// deploys a new function with the fiven parameters
 async function deployFunction(functionName, zipContent) {
   const lambda = new Lambda();
 
@@ -54,6 +55,7 @@ async function deployFunction(functionName, zipContent) {
   }
 }
 
+// edits an existing function with the given parameters
 async function editFunction(functionName, zipContent) {
   const lambda = new Lambda();
 

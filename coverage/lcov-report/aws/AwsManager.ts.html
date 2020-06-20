@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>30/40</span>
+                <span class='fraction'>40/40</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/10</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75.68% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>28/37</span>
+                <span class='fraction'>37/37</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -207,15 +207,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -243,11 +243,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
@@ -285,7 +285,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -297,15 +297,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -397,7 +397,7 @@ class AwsManager {
         await this.lambda.deleteFunction(parameters).promise();
         return Promise.resolve(`${functionName} deleted successfully`);
       } catch (err) {
-        return Promise.reject(new Error(`Function with name ${functionName} could not be deleted`));
+        return Promise.reject(new Error(`${functionName} could not be deleted`));
       }
     }
 &nbsp;
@@ -411,8 +411,8 @@ class AwsManager {
     * @param fileBuffer Buffer containing a stringified version of the function to be deployed.
     * @return Promise&lt;string&gt; - edit success or error message.
     */
-<span class="fstat-no" title="function not covered" >    async e</span>ditLambda(functionName: string, parametersCount: number, fileBuffer: Buffer): Promise&lt;string&gt; {
-      const <span class="cstat-no" title="statement not covered" >parameters = {</span>
+    async editLambda(functionName: string, parametersCount: number, fileBuffer: Buffer): Promise&lt;string&gt; {
+      const parameters = {
         // the edit steps are very similar to the deployment steps, therefore the deployer is used in both cases
         FunctionName: 'etherless-server-dev-deploy',
         Payload: JSON.stringify({
@@ -424,15 +424,15 @@ class AwsManager {
       };
 &nbsp;
       try {
-        const <span class="cstat-no" title="statement not covered" >data: any = <span class="cstat-no" title="statement not covered" >await this.lambda.invoke(parameters).promise();</span></span>
-        const <span class="cstat-no" title="statement not covered" >payload = JSON.parse(data.Payload);</span>
-<span class="cstat-no" title="statement not covered" >        if (data.FunctionError) { // lambda deployer (with edit=true) invocation error</span>
-<span class="cstat-no" title="statement not covered" >          throw new Error(payload.errorMessage); </span>// caught by next catch block
-        } else <span class="cstat-no" title="statement not covered" >if (payload.message) { // updateFunctionCode error in deployer (with edit=true)</span>
-<span class="cstat-no" title="statement not covered" >          throw new Error(payload.message); </span>// caught by next catch block
-        } <span class="cstat-no" title="statement not covered" >return Promise.resolve(`${functionName} successfully edited`);</span>
+        const data: any = await this.lambda.invoke(parameters).promise();
+        const payload = JSON.parse(data.Payload);
+        if (data.FunctionError) { // lambda deployer (with edit=true) invocation error
+          throw new Error(payload.errorMessage); // caught by next catch block
+        } else if (payload.message) { // updateFunctionCode error in deployer (with edit=true)
+          throw new Error(payload.message); // caught by next catch block
+        } return Promise.resolve(`${functionName} successfully edited`);
       } catch (err) {
-<span class="cstat-no" title="statement not covered" >        return Promise.reject(new Error(err.message));</span>
+        return Promise.reject(new Error(err.message));
       }
     }
 }
@@ -445,7 +445,7 @@ export default AwsManager;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Jun 20 2020 22:34:16 GMT+0200 (Central European Summer Time)
+                at Sat Jun 20 2020 23:43:33 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

@@ -6,6 +6,7 @@ import IpfsManager from '../../src/ipfs/IpfsManager';
 import RunEventData from '../../src/event/RunEventData';
 import DeployEventData from '../../src/event/DeployEventData';
 import DeleteEventData from '../../src/event/DeleteEventData';
+import EditEventData from '../../src/event/EditEventData';
 
 const ethers = require('ethers');
 const AWS = require('aws-sdk');
@@ -27,12 +28,16 @@ const ipfsManager = new IpfsManager(ipfsMock);
 
 const processor = new EventProcessor(smartManager, awsManager, ipfsManager);
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 test('handles valid run result correctly', async () => {
   jest.spyOn(smartManager, 'sendRunResult');
   AWS.mockInvokePromise(lambdaMock, Promise.resolve({ Payload: JSON.stringify({ message: '15' }) }));
   try {
     await processor.processRunEvent(new RunEventData('existingFunction', ['2', '3'], new BigNumber(1)));
-    expect(smartManager.sendRunResult).toBeCalledWith(expect.anything(), expect.anything(), true);
+    expect(smartManager.sendRunResult).toBeCalledWith('15', new BigNumber(1), true);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
@@ -42,14 +47,23 @@ test('processes run exception correctly', async () => {
   jest.spyOn(smartManager, 'sendRunResult');
   const error = {
     FunctionError: true,
-    Payload: {
-      errorMessage: 'Mocked Runtime Error',
-    },
+    Payload: '{"errorMessage": "Mocked Runtime Error"}',
   };
   AWS.mockInvokePromise(lambdaMock, Promise.resolve(error));
   try {
     await processor.processRunEvent(new RunEventData('existingFunctionWithBug', ['2', '3'], new BigNumber(1)));
-    expect(smartManager.sendRunResult).toBeCalledWith(expect.anything(), expect.anything(), false);
+    expect(smartManager.sendRunResult).toBeCalledWith('Mocked Runtime Error', new BigNumber(1), true);
+  } catch (err) {
+    throw new Error(`test failed with error: ${err}`);
+  }
+});
+
+test('processes run invocation fail correctly', async () => {
+  jest.spyOn(smartManager, 'sendRunResult');
+  AWS.mockInvokePromise(lambdaMock, Promise.reject(new Error('Run Invocation Error')));
+  try {
+    await processor.processRunEvent(new RunEventData('existingFunction', ['2', '3'], new BigNumber(1)));
+    expect(smartManager.sendRunResult).toBeCalledWith('Run Invocation Error', new BigNumber(1), false);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
@@ -63,7 +77,7 @@ test('processes deploy valid result correctly', async () => {
   AWS.mockInvokePromise(lambdaMock, Promise.resolve(resultMock));
   try {
     await processor.processDeployEvent(new DeployEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
-    expect(smartManager.sendDeployResult).toBeCalledWith(expect.anything(), expect.anything(), expect.anything(), true);
+    expect(smartManager.sendDeployResult).toBeCalledWith('foo successfully deployed', 'foo', new BigNumber(1), true);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
@@ -72,14 +86,12 @@ test('processes deploy valid result correctly', async () => {
 test('processes deploy exception correctly', async () => {
   jest.spyOn(smartManager, 'sendDeployResult');
   const error = {
-    Payload: JSON.stringify({
-      message: 'Mocked Runtime Error',
-    }),
+    Payload: '{"message": "Mocked Runtime Error"}',
   };
-  AWS.mockInvokePromise(lambdaMock, Promise.reject(error));
+  AWS.mockInvokePromise(lambdaMock, Promise.resolve(error));
   try {
     await processor.processDeployEvent(new DeployEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
-    expect(smartManager.sendDeployResult).toBeCalledWith(expect.anything(), expect.anything(), expect.anything(), false);
+    expect(smartManager.sendDeployResult).toBeCalledWith('Mocked Runtime Error', 'foo', new BigNumber(1), false);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
@@ -89,20 +101,48 @@ test('processes delete valid result correctly', async () => {
   jest.spyOn(smartManager, 'sendDeleteResult');
   AWS.mockDeletePromise(lambdaMock, Promise.resolve());
   try {
-    await processor.processDeleteEvent(new DeleteEventData('someFunctionName', new BigNumber(1)));
-    expect(smartManager.sendDeleteResult).toBeCalledWith(expect.anything(), expect.anything(), expect.anything(), true);
+    await processor.processDeleteEvent(new DeleteEventData('foo', new BigNumber(1)));
+    expect(smartManager.sendDeleteResult).toBeCalledWith('foo deleted successfully', 'foo', new BigNumber(1), true);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
 });
 
 test('processes delete exception correctly', async () => {
-  
   jest.spyOn(smartManager, 'sendDeleteResult');
   AWS.mockDeletePromise(lambdaMock, Promise.reject(new Error('ResourceNotFound exception')));
   try {
     await processor.processDeleteEvent(new DeleteEventData('nonExistingFunctionName', new BigNumber(1)));
-    expect(smartManager.sendDeleteResult).toBeCalledWith(expect.anything(), expect.anything(), expect.anything(), false);
+    expect(smartManager.sendDeleteResult).toBeCalledWith('nonExistingFunctionName could not be deleted',
+      'nonExistingFunctionName', new BigNumber(1), false);
+  } catch (err) {
+    throw new Error(`test failed with error: ${err}`);
+  }
+});
+
+test('processes edit valid result correctly', async () => {
+  jest.spyOn(smartManager, 'sendEditResult');
+  const resultMock = {
+    Payload: '{}',
+  };
+  AWS.mockInvokePromise(lambdaMock, Promise.resolve(resultMock));
+  try {
+    await processor.processEditEvent(new EditEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
+    expect(smartManager.sendEditResult).toBeCalledWith('foo successfully edited', 'foo', new BigNumber(1), true);
+  } catch (err) {
+    throw new Error(`test failed with error: ${err}`);
+  }
+});
+
+test('processes edit exception correctly', async () => {
+  jest.spyOn(smartManager, 'sendEditResult');
+  const error = {
+    Payload: '{"message":"Mocked Error"}',
+  };
+  AWS.mockInvokePromise(lambdaMock, Promise.resolve(error));
+  try {
+    await processor.processEditEvent(new EditEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
+    expect(smartManager.sendEditResult).toBeCalledWith('Mocked Error', 'foo', new BigNumber(1), false);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
