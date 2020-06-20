@@ -34,14 +34,11 @@ async function buildZip(content) {
   return c;
 }
 
-module.exports.deploy = async (event) => {
-  const fixBuffer = Buffer.from(event.fileBuffer.data);
-
-  const fileContent = injectDefaultHandler(fixBuffer.toString('utf8'), event.functionName, event.parametersCount);
-  const zipContent = await buildZip(fileContent);
+async function deployFunction(functionName, zipContent) {
+  const lambda = new Lambda();
 
   const params = {
-    FunctionName: `etherless-server-dev-${event.functionName}`,
+    FunctionName: `etherless-server-dev-${functionName}`,
     Code: {
       ZipFile: zipContent,
     },
@@ -50,10 +47,47 @@ module.exports.deploy = async (event) => {
     Runtime: 'nodejs12.x',
   };
 
-  const lambda = new Lambda();
-
   try {
     return await lambda.createFunction(params).promise();
+  } catch (err) {
+    return err;
+  }
+}
+
+async function editFunction(functionName, zipContent) {
+  const lambda = new Lambda();
+
+  const params = {
+    FunctionName: `etherless-server-dev-${functionName}`,
+    ZipFile: zipContent,
+  };
+
+  try {
+    return await lambda.updateFunctionCode(params).promise();
+  } catch (err) {
+    return err;
+  }
+}
+
+// manages the deployment process after checking if it's a new deploy or an edit-deploy
+module.exports.deploy = async (event) => {
+  // common for both deploy and edit
+  const fixBuffer = Buffer.from(event.fileBuffer.data);
+  const fileContent = injectDefaultHandler(fixBuffer.toString('utf8'), event.functionName, event.parametersCount);
+  const zipContent = await buildZip(fileContent);
+
+  // requested an edit for an already existing function
+  if (event.edit) {
+    try {
+      return await editFunction(event.functionName, zipContent);
+    } catch (err) {
+      return err;
+    }
+  }
+
+  // requested a fresh deploy of a non existing function
+  try {
+    return await deployFunction(event.functionName, zipContent);
   } catch (err) {
     return err;
   }

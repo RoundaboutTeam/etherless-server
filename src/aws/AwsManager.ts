@@ -59,9 +59,9 @@ class AwsManager {
         const data: any = await this.lambda.invoke(parameters).promise();
         const payload = JSON.parse(data.Payload);
         if (data.FunctionError) { // lambda deployer invocation error
-          throw new Error(payload.errorMessage); // catched by next catch block
+          throw new Error(payload.errorMessage); // caught by next catch block
         } else if (payload.message) { // createFunction error in deployer
-          throw new Error(payload.message); // catched by next catch block
+          throw new Error(payload.message); // caught by next catch block
         } return Promise.resolve(`${functionName} successfully deployed`);
       } catch (err) {
         return Promise.reject(new Error(err.message));
@@ -85,6 +85,41 @@ class AwsManager {
         return Promise.resolve(`${functionName} deleted successfully`);
       } catch (err) {
         return Promise.reject(new Error(`Function with name ${functionName} could not be deleted`));
+      }
+    }
+
+    /**
+    * @async
+    * @desc invokes the AWSDeployer Lambda function using the name and the content 
+    * of the Lambda function to be edited, returning an asynchronous response or error message.
+    * @method editLambda
+    * @param functionName name of the function to be deployed.
+    * @param parametersCount number of parameters required by the function.
+    * @param fileBuffer Buffer containing a stringified version of the function to be deployed.
+    * @return Promise<string> - edit success or error message.
+    */
+    async editLambda(functionName: string, parametersCount: number, fileBuffer: Buffer): Promise<string> {
+      const parameters = {
+        // the edit steps are very similar to the deployment steps, therefore the deployer is used in both cases
+        FunctionName: 'etherless-server-dev-deploy',
+        Payload: JSON.stringify({
+          functionName: functionName,
+          parametersCount: parametersCount,
+          fileBuffer: fileBuffer,
+          edit: true,
+        }),
+      };
+
+      try {
+        const data: any = await this.lambda.invoke(parameters).promise();
+        const payload = JSON.parse(data.Payload);
+        if (data.FunctionError) { // lambda deployer (with edit=true) invocation error
+          throw new Error(payload.errorMessage); // caught by next catch block
+        } else if (payload.message) { // updateFunctionCode error in deployer (with edit=true)
+          throw new Error(payload.message); // caught by next catch block
+        } return Promise.resolve(`${functionName} successfully edited`);
+      } catch (err) {
+        return Promise.reject(new Error(err.message));
       }
     }
 }

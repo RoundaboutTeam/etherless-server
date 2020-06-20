@@ -4,6 +4,7 @@ import RunEventData from '../event/RunEventData';
 import DeployEventData from '../event/DeployEventData';
 import DeleteEventData from '../event/DeleteEventData';
 import SmartManager from './SmartManager';
+import EditEventData from '../event/EditEventData';
 
 /**
   * @desc class derived from SmartManager, which acts as an Ethereum events listener.
@@ -25,18 +26,18 @@ class EthereumSmartManager extends SmartManager {
         this.dispatchRunEvent(new RunEventData(functionName, parameters.split(','), id));
       });
 
-      // (p1, p2)
       this.contract.on('deployRequest', (functionName: string, parametersSignature: string, ipfsPath: string, id: BigNumber) => {
-        const noParenthesis = parametersSignature.slice(1, parametersSignature.length - 1).trim();
-        let paramsCount = 0;
-        if (noParenthesis !== '') {
-          paramsCount = parametersSignature.split(',').length;
-        }
+        const paramsCount = EthereumSmartManager.getParametersCount(parametersSignature);
         this.dispatchDeployEvent(new DeployEventData(functionName, paramsCount, ipfsPath, id));
       });
 
       this.contract.on('deleteRequest', (functionName: string, id: BigNumber) => {
         this.dispatchDeleteEvent(new DeleteEventData(functionName, id));
+      });
+
+      this.contract.on('editRequest', (functionName: string, parametersSignature: string, ipfsPath: string, id: BigNumber) => {
+        const paramsCount = EthereumSmartManager.getParametersCount(parametersSignature);
+        this.dispatchEditEvent(new EditEventData(functionName, paramsCount, ipfsPath, id));
       });
     }
 
@@ -75,12 +76,56 @@ class EthereumSmartManager extends SmartManager {
       }
     }
 
+    /**
+      * @desc sends the result of a previously received delete request back to Etherless-smart.
+      * The response contains a message and useful request related information.
+      * @method sendDeleteResult
+      * @param response response message.
+      * @param functionName name of the deployed function.
+      * @param id request id.
+      * @param success 'true' if the request was successful, 'false' otherwise.
+      * @return void
+    */
     sendDeleteResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
       try {
         this.contract.deleteResult(`{ "message": "${response}" }`, functionName, id, success);
       } catch (err) {
         // retry sending message again here
       }
+    }
+
+    /**
+      * @desc sends the result of a previously received edit request back to Etherless-smart.
+      * The response contains a message and useful request related information.
+      * @method sendEditResult
+      * @param response response message.
+      * @param functionName name of the edited function.
+      * @param id request id.
+      * @param success 'true' if the request was successful, 'false' otherwise.
+      * @return void
+    */
+    sendEditResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
+      try {
+        this.contract.editResult(`{ "message": "${response}" }`, functionName, id, success);
+      } catch (err) {
+        // retry sending message again here
+      }
+    }
+
+    /**
+      * @desc calculates the number of parameters in a given parameters signature.
+      * used by deploy and edit funcitonalities.
+      * @method getParametersCount
+      * @param parametersSignature - string representing the parameters signature.
+      * @return number - the number of parameters in the parameters signature string.
+    */
+    private static getParametersCount(parametersSignature: string): number {
+      const noParenthesis = parametersSignature.slice(1, parametersSignature.length - 1).trim();
+      let paramsCount = 0;
+      if (noParenthesis !== '') {
+        paramsCount = parametersSignature.split(',').length;
+      }
+      return paramsCount;
     }
 }
 
