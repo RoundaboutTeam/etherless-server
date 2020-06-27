@@ -106,7 +106,7 @@ class EventProcessor implements IEventProcessor {
     * @param data EditEventData class object, content of the request to be processed.
     * @return Promise<string> - deployment success or error message.
     */
-    async processEditEvent(data: DeployEventData) {
+    async processEditEvent(data: EditEventData) {
       try {
         const fileBuffer = await this.ipfsManager.getFileContent(data.ipfsPath);
         const result = await this.awsManager.editLambda(data.functionName, data.parametersCount, fileBuffer);

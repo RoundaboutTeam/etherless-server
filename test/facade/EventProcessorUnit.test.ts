@@ -1,32 +1,22 @@
 import { BigNumber } from 'ethers/utils';
 import EventProcessor from '../../src/facade/EventProcessor';
-import EthSmartManager from '../../src/smart/EthSmartManager';
-import AwsManager from '../../src/aws/AwsManager';
-import IpfsManager from '../../src/ipfs/IpfsManager';
 import RunEventData from '../../src/event/RunEventData';
 import DeployEventData from '../../src/event/DeployEventData';
 import DeleteEventData from '../../src/event/DeleteEventData';
 import EditEventData from '../../src/event/EditEventData';
 
-const ethers = require('ethers');
-const AWS = require('aws-sdk');
-const IPFS = require('ipfs-mini');
+const AwsManager = require('../../src/aws/AwsManager');
+const IpfsManager = require('../../src/ipfs/IpfsManager');
+const EthSmartManager = require('../../src/smart/EthSmartManager');
 
 // manual mocks defined in __mocks__ folder adjacent to node_modules folder
-jest.mock('ethers');
-jest.mock('aws-sdk');
-jest.mock('ipfs-mini');
+jest.mock('../../src/aws/AwsManager');
+jest.mock('../../src/ipfs/IpfsManager');
+jest.mock('../../src/smart/EthSmartManager');
 
-const contractMock = new ethers.Contract();
-const smartManager = new EthSmartManager(contractMock);
-
-const lambdaMock = new AWS.Lambda();
-const awsManager = new AwsManager(lambdaMock);
-
-const ipfsMock = new IPFS.Ipfs();
-const ipfsManager = new IpfsManager(ipfsMock);
-
-const processor = new EventProcessor(smartManager, awsManager, ipfsManager);
+const smartManager = EthSmartManager;
+const awsManager = new AwsManager.Manager();
+const processor = new EventProcessor(smartManager, awsManager, IpfsManager);
 
 afterEach(() => {
   jest.clearAllMocks();
@@ -34,7 +24,7 @@ afterEach(() => {
 
 test('handles valid run result correctly', async () => {
   jest.spyOn(smartManager, 'sendRunResult');
-  AWS.mockInvokePromise(lambdaMock, Promise.resolve({ Payload: JSON.stringify({ message: '15' }) }));
+  AwsManager.invokeSet(awsManager, Promise.resolve('15'));
   try {
     await processor.processRunEvent(new RunEventData('existingFunction', ['2', '3'], new BigNumber(1)));
     expect(smartManager.sendRunResult).toBeCalledWith('15', new BigNumber(1), true);
@@ -45,11 +35,8 @@ test('handles valid run result correctly', async () => {
 
 test('processes run exception correctly', async () => {
   jest.spyOn(smartManager, 'sendRunResult');
-  const error = {
-    FunctionError: true,
-    Payload: '{"errorMessage": "Mocked Runtime Error"}',
-  };
-  AWS.mockInvokePromise(lambdaMock, Promise.resolve(error));
+  const error = 'Mocked Runtime Error';
+  AwsManager.invokeSet(awsManager, Promise.resolve(error));
   try {
     await processor.processRunEvent(new RunEventData('existingFunctionWithBug', ['2', '3'], new BigNumber(1)));
     expect(smartManager.sendRunResult).toBeCalledWith('Mocked Runtime Error', new BigNumber(1), true);
@@ -60,7 +47,7 @@ test('processes run exception correctly', async () => {
 
 test('processes run invocation fail correctly', async () => {
   jest.spyOn(smartManager, 'sendRunResult');
-  AWS.mockInvokePromise(lambdaMock, Promise.reject(new Error('Run Invocation Error')));
+  AwsManager.invokeSet(awsManager, Promise.reject(new Error('Run Invocation Error')));
   try {
     await processor.processRunEvent(new RunEventData('existingFunction', ['2', '3'], new BigNumber(1)));
     expect(smartManager.sendRunResult).toBeCalledWith('Run Invocation Error', new BigNumber(1), false);
@@ -71,11 +58,7 @@ test('processes run invocation fail correctly', async () => {
 
 test('processes deploy valid result correctly', async () => {
   jest.spyOn(smartManager, 'sendDeployResult');
-  const resultMock = {
-    Payload: '{}',
-  };
-  AWS.mockInvokePromise(lambdaMock, Promise.resolve(resultMock));
-  IPFS.catSet(ipfsMock, Promise.resolve('Mocked buffer'));
+  AwsManager.deploySet(awsManager, Promise.resolve('foo successfully deployed'));
   try {
     await processor.processDeployEvent(new DeployEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
     expect(smartManager.sendDeployResult).toBeCalledWith('foo successfully deployed', 'foo', new BigNumber(1), true);
@@ -86,14 +69,11 @@ test('processes deploy valid result correctly', async () => {
 
 test('processes deploy exception correctly', async () => {
   jest.spyOn(smartManager, 'sendDeployResult');
-  const error = {
-    Payload: '{"message": "Mocked Runtime Error"}',
-  };
-  AWS.mockInvokePromise(lambdaMock, Promise.resolve(error));
-  IPFS.catSet(ipfsMock, Promise.resolve(Buffer.from('Mocked buffer')));
+  const error = 'Mocked Runtime Error';
+  AwsManager.deploySet(awsManager, Promise.resolve(error));
   try {
     await processor.processDeployEvent(new DeployEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
-    expect(smartManager.sendDeployResult).toBeCalledWith('Mocked Runtime Error', 'foo', new BigNumber(1), false);
+    expect(smartManager.sendDeployResult).toBeCalledWith('Mocked Runtime Error', 'foo', new BigNumber(1), true);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
@@ -101,14 +81,12 @@ test('processes deploy exception correctly', async () => {
 
 test('processes deploy IPFS exception correctly', async () => {
   jest.spyOn(smartManager, 'sendDeployResult');
-  const resultMock = {
-    Payload: '{}',
-  };
-  AWS.mockInvokePromise(lambdaMock, Promise.resolve(resultMock));
-  IPFS.catSet(ipfsMock, Promise.reject(new Error('someIpfsPath')));
+  const error = 'File could not be read';
+  AwsManager.deploySet(awsManager, Promise.resolve('foo successfully deployed'));
+  IpfsManager.getFileContent.mockReturnValueOnce(Promise.reject(new Error(error)));
   try {
     await processor.processDeployEvent(new DeployEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
-    expect(smartManager.sendDeployResult).toBeCalledWith('There was an error fetching the file from the given path: Error: someIpfsPath', 'foo', new BigNumber(1), false);
+    expect(smartManager.sendDeployResult).toBeCalledWith('File could not be read', 'foo', new BigNumber(1), false);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
@@ -116,7 +94,7 @@ test('processes deploy IPFS exception correctly', async () => {
 
 test('processes delete valid result correctly', async () => {
   jest.spyOn(smartManager, 'sendDeleteResult');
-  AWS.mockDeletePromise(lambdaMock, Promise.resolve());
+  AwsManager.deleteSet(awsManager, Promise.resolve('foo deleted successfully'));
   try {
     await processor.processDeleteEvent(new DeleteEventData('foo', new BigNumber(1)));
     expect(smartManager.sendDeleteResult).toBeCalledWith('foo deleted successfully', 'foo', new BigNumber(1), true);
@@ -127,7 +105,7 @@ test('processes delete valid result correctly', async () => {
 
 test('processes delete exception correctly', async () => {
   jest.spyOn(smartManager, 'sendDeleteResult');
-  AWS.mockDeletePromise(lambdaMock, Promise.reject(new Error('ResourceNotFound exception')));
+  AwsManager.deleteSet(awsManager, Promise.reject(new Error('nonExistingFunctionName could not be deleted')));
   try {
     await processor.processDeleteEvent(new DeleteEventData('nonExistingFunctionName', new BigNumber(1)));
     expect(smartManager.sendDeleteResult).toBeCalledWith('nonExistingFunctionName could not be deleted',
@@ -139,13 +117,12 @@ test('processes delete exception correctly', async () => {
 
 test('processes edit valid result correctly', async () => {
   jest.spyOn(smartManager, 'sendEditResult');
-  const resultMock = {
-    Payload: '{}',
-  };
-  AWS.mockInvokePromise(lambdaMock, Promise.resolve(resultMock));
-  IPFS.catSet(ipfsMock, Promise.resolve(Buffer.from('Mocked buffer')));
+  const resultMock = 'foo successfully edited';
+  AwsManager.editSet(awsManager, Promise.resolve(resultMock));
   try {
     await processor.processEditEvent(new EditEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
+    expect(IpfsManager.getFileContent).toBeCalledWith('someIpfsPath');
+    expect(awsManager.editLambda).toBeCalledWith('foo', 2, 'File read successfully');
     expect(smartManager.sendEditResult).toBeCalledWith('foo successfully edited', 'foo', new BigNumber(1), true);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
@@ -154,29 +131,13 @@ test('processes edit valid result correctly', async () => {
 
 test('processes edit exception correctly', async () => {
   jest.spyOn(smartManager, 'sendEditResult');
-  const error = {
-    Payload: '{"message":"Mocked Error"}',
-  };
-  AWS.mockInvokePromise(lambdaMock, Promise.resolve(error));
-  IPFS.catSet(ipfsMock, Promise.resolve(Buffer.from('Mocked buffer')));
+  const error = 'Mocked Error';
+  AwsManager.editSet(awsManager, Promise.reject(new Error(error)));
   try {
     await processor.processEditEvent(new EditEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
+    expect(IpfsManager.getFileContent).toBeCalledWith('someIpfsPath');
+    expect(awsManager.editLambda).toBeCalledWith('foo', 2, 'File read successfully');
     expect(smartManager.sendEditResult).toBeCalledWith('Mocked Error', 'foo', new BigNumber(1), false);
-  } catch (err) {
-    throw new Error(`test failed with error: ${err}`);
-  }
-});
-
-test('processes edit IPFS exception correctly', async () => {
-  jest.spyOn(smartManager, 'sendDeployResult');
-  const resultMock = {
-    Payload: '{}',
-  };
-  AWS.mockInvokePromise(lambdaMock, Promise.resolve(resultMock));
-  IPFS.catSet(ipfsMock, Promise.reject(new Error('someIpfsPath')));
-  try {
-    await processor.processEditEvent(new DeployEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
-    expect(smartManager.sendEditResult).toBeCalledWith('There was an error fetching the file from the given path: Error: someIpfsPath', 'foo', new BigNumber(1), false);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
