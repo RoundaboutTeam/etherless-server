@@ -22,7 +22,7 @@ class EthereumSmartManager extends SmartManager {
     constructor(contract: Contract) {
       super();
       this.contract = contract;
-      this.contract.on('runRequest', (functionName: string, parameters: string, id: BigNumber) => {
+      this.contract.on('runRequest', (functionName: string, parameters: string, sender: string, id: BigNumber) => {
         this.dispatchRunEvent(new RunEventData(functionName, parameters.split(','), id));
       });
 

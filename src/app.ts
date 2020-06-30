@@ -8,6 +8,7 @@ import RunEventData from './event/RunEventData';
 import { BigNumber } from 'ethers/utils';
 import DeployEventData from './event/DeployEventData';
 import EditEventData from './event/EditEventData';
+import EventData from './event/EventData';
 
 // contract interface object used to listen events and send responses to Etherless-smart
 const contract = ConfigUtilities.getEthSmartConfig().createSmartContract();
