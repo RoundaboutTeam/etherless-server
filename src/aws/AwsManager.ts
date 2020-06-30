@@ -22,7 +22,7 @@ class AwsManager {
     */
     async invokeLambda(functionName: string, params: Array<string>): Promise<string> {
       const parameters = {
-        FunctionName: `etherless-server-dev-${functionName}`,
+        FunctionName: `${functionName}`,
         Payload: JSON.stringify({ parameters: params }),
       };
       try {
@@ -48,7 +48,7 @@ class AwsManager {
     */
     async deployFunction(functionName: string, parametersCount: number, fileBuffer: Buffer) {
       const parameters = {
-        FunctionName: 'etherless-server-dev-deploy',
+        FunctionName: 'etherless-dev-deploy',
         Payload: JSON.stringify({
           functionName: functionName,
           parametersCount: parametersCount,
@@ -78,7 +78,7 @@ class AwsManager {
     */
     async deleteLambda(functionName: string): Promise<string> {
       const parameters = {
-        FunctionName: `etherless-server-dev-${functionName}`,
+        FunctionName: `${functionName}`,
       };
       try {
         await this.lambda.deleteFunction(parameters).promise();
@@ -101,7 +101,7 @@ class AwsManager {
     async editLambda(functionName: string, parametersCount: number, fileBuffer: Buffer): Promise<string> {
       const parameters = {
         // the edit steps are very similar to the deployment steps, therefore the deployer is used in both cases
-        FunctionName: 'etherless-server-dev-deploy',
+        FunctionName: 'etherless-dev-deploy',
         Payload: JSON.stringify({
           functionName: functionName,
           parametersCount: parametersCount,

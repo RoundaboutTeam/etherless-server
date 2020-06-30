@@ -1,7 +1,7 @@
 {
   "name": "etherless-server",
-  "version": "0.0.3",
-  "description": "etherless-server v0.0.3",
+  "version": "1.0.1",
+  "description": "etherless-server v1.0.1",
   "main": "app.js",
   "scripts": {
     "start": "ts-node src/app.ts",

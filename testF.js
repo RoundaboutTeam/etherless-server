@@ -1,3 +1,3 @@
-function repeatAfterMe(word) {
+function echo(word) {
   return word;
 };

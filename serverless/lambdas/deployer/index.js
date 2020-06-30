@@ -16,12 +16,8 @@ function injectDefaultHandler(content, functionName, parametersCount) {
   }
   return `module.exports.defaultHandler = async event => {
     ${p}
-    try{
-      return { message: ${functionName}(${params}) };
-    } catch(err) {
-      return { message: err.message ? err.message : err };
-    }
-  }\n
+    return { message: ${functionName}(${params}) };
+}\n
   ${content}`;
 }
 
@@ -39,7 +35,7 @@ async function deployFunction(functionName, zipContent) {
   const lambda = new Lambda();
 
   const params = {
-    FunctionName: `etherless-server-dev-${functionName}`,
+    FunctionName: `${functionName}`,
     Code: {
       ZipFile: zipContent,
     },
@@ -60,7 +56,7 @@ async function editFunction(functionName, zipContent) {
   const lambda = new Lambda();
 
   const params = {
-    FunctionName: `etherless-server-dev-${functionName}`,
+    FunctionName: `${functionName}`,
     ZipFile: zipContent,
   };
 

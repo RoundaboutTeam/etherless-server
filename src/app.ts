@@ -6,6 +6,8 @@ import CliSimulator from '../CliSimulator';
 import IpfsManager from './ipfs/IpfsManager';
 import RunEventData from './event/RunEventData';
 import { BigNumber } from 'ethers/utils';
+import DeployEventData from './event/DeployEventData';
+import EditEventData from './event/EditEventData';
 
 // contract interface object used to listen events and send responses to Etherless-smart
 const contract = ConfigUtilities.getEthSmartConfig().createSmartContract();
