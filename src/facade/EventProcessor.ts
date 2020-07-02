@@ -46,7 +46,7 @@ class EventProcessor implements IEventProcessor {
       });
 
       this.smartManager.onEdit((data:EditEventData) => {
-        this.processDeleteEvent(data);
+        this.processEditEvent(data);
       });
     }
 
