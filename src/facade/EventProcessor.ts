@@ -110,9 +110,9 @@ class EventProcessor implements IEventProcessor {
       try {
         const fileBuffer = await this.ipfsManager.getFileContent(data.ipfsPath);
         const result = await this.awsManager.editLambda(data.functionName, data.parametersCount, fileBuffer);
-        this.smartManager.sendEditResult(result, data.functionName, data.id, true);
+        this.smartManager.sendEditResult(result, data.functionName, data.signature, data.id, true);
       } catch (err) {
-        this.smartManager.sendEditResult(err.message, data.functionName, data.id, false);
+        this.smartManager.sendEditResult(err.message, data.functionName, data.signature, data.id, false);
       }
     }
 }

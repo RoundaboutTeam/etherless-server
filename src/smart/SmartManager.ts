@@ -82,7 +82,7 @@ abstract class SmartManager {
      * @param success 'true' if the request was successful, 'false' otherwise.
      * @return void
    */
-   abstract sendEditResult(response: string, functionName: string, id: BigNumber, error: boolean): void;
+   abstract sendEditResult(response: string, functionName: string, signature: string, id: BigNumber, error: boolean): void;
 
    /**
       * @desc allows to subscribe a callback to the runDispatcher attribute.

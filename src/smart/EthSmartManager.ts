@@ -37,7 +37,7 @@ class EthereumSmartManager extends SmartManager {
 
       this.contract.on('editRequest', (functionName: string, parametersSignature: string, ipfsPath: string, id: BigNumber) => {
         const paramsCount = EthereumSmartManager.getParametersCount(parametersSignature);
-        this.dispatchEditEvent(new EditEventData(functionName, paramsCount, ipfsPath, id));
+        this.dispatchEditEvent(new EditEventData(functionName, parametersSignature, paramsCount, ipfsPath, id));
       });
     }
 
@@ -99,14 +99,15 @@ class EthereumSmartManager extends SmartManager {
       * The response contains a message and useful request related information.
       * @method sendEditResult
       * @param response response message.
+      * @param signature function parameters signature.
       * @param functionName name of the edited function.
       * @param id request id.
       * @param success 'true' if the request was successful, 'false' otherwise.
       * @return void
     */
-    sendEditResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
+    sendEditResult(response: string, functionName: string, signature: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.editResult(`{ "message": "${response}" }`, functionName, id, success);
+        this.contract.editResult(`{ "message": "${response}" }`, signature, functionName, id, success);
       } catch (err) {
         // retry sending message again here
       }
