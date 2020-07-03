@@ -2,9 +2,7 @@
 node_modules
 jspm_packages
 configs
+coverage
 
 # Serverless directories
 .serverless
-
-# Code Coverage Files
-/coverage/*
