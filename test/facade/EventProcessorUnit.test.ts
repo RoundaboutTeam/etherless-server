@@ -120,10 +120,10 @@ test('processes edit valid result correctly', async () => {
   const resultMock = 'foo successfully edited';
   AwsManager.editSet(awsManager, Promise.resolve(resultMock));
   try {
-    await processor.processEditEvent(new EditEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
+    await processor.processEditEvent(new EditEventData('foo', '(a)', 2, 'someIpfsPath', new BigNumber(1)));
     expect(IpfsManager.getFileContent).toBeCalledWith('someIpfsPath');
     expect(awsManager.editLambda).toBeCalledWith('foo', 2, 'File read successfully');
-    expect(smartManager.sendEditResult).toBeCalledWith('foo successfully edited', 'foo', new BigNumber(1), true);
+    expect(smartManager.sendEditResult).toBeCalledWith('foo successfully edited', 'foo', '(a)', new BigNumber(1), true);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
@@ -134,10 +134,10 @@ test('processes edit exception correctly', async () => {
   const error = 'Mocked Error';
   AwsManager.editSet(awsManager, Promise.reject(new Error(error)));
   try {
-    await processor.processEditEvent(new EditEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
+    await processor.processEditEvent(new EditEventData('foo', '(a)', 2, 'someIpfsPath', new BigNumber(1)));
     expect(IpfsManager.getFileContent).toBeCalledWith('someIpfsPath');
     expect(awsManager.editLambda).toBeCalledWith('foo', 2, 'File read successfully');
-    expect(smartManager.sendEditResult).toBeCalledWith('Mocked Error', 'foo', new BigNumber(1), false);
+    expect(smartManager.sendEditResult).toBeCalledWith('Mocked Error', 'foo', '(a)', new BigNumber(1), false);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }

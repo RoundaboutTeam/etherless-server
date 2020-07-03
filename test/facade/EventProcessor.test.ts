@@ -145,8 +145,8 @@ test('processes edit valid result correctly', async () => {
   AWS.mockInvokePromise(lambdaMock, Promise.resolve(resultMock));
   IPFS.catSet(ipfsMock, Promise.resolve(Buffer.from('Mocked buffer')));
   try {
-    await processor.processEditEvent(new EditEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
-    expect(smartManager.sendEditResult).toBeCalledWith('foo successfully edited', 'foo', new BigNumber(1), true);
+    await processor.processEditEvent(new EditEventData('foo', '(a)', 2, 'someIpfsPath', new BigNumber(1)));
+    expect(smartManager.sendEditResult).toBeCalledWith('foo successfully edited', 'foo', '(a)', new BigNumber(1), true);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
@@ -160,8 +160,8 @@ test('processes edit exception correctly', async () => {
   AWS.mockInvokePromise(lambdaMock, Promise.resolve(error));
   IPFS.catSet(ipfsMock, Promise.resolve(Buffer.from('Mocked buffer')));
   try {
-    await processor.processEditEvent(new EditEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
-    expect(smartManager.sendEditResult).toBeCalledWith('Mocked Error', 'foo', new BigNumber(1), false);
+    await processor.processEditEvent(new EditEventData('foo', '(a)', 2, 'someIpfsPath', new BigNumber(1)));
+    expect(smartManager.sendEditResult).toBeCalledWith('Mocked Error', 'foo', '(a)', new BigNumber(1), false);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
@@ -175,8 +175,8 @@ test('processes edit IPFS exception correctly', async () => {
   AWS.mockInvokePromise(lambdaMock, Promise.resolve(resultMock));
   IPFS.catSet(ipfsMock, Promise.reject(new Error('someIpfsPath')));
   try {
-    await processor.processEditEvent(new DeployEventData('foo', 2, 'someIpfsPath', new BigNumber(1)));
-    expect(smartManager.sendEditResult).toBeCalledWith('There was an error fetching the file from the given path: Error: someIpfsPath', 'foo', new BigNumber(1), false);
+    await processor.processEditEvent(new EditEventData('foo', '(a)', 2, 'someIpfsPath', new BigNumber(1)));
+    expect(smartManager.sendEditResult).toBeCalledWith('There was an error fetching the file from the given path: Error: someIpfsPath', 'foo', '(a)', new BigNumber(1), false);
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
