@@ -81,7 +81,7 @@ test('dispatches delete event', () => {
 
 test('sendEditResult blockchain exception is captured and managed correctly', () => {
   contract.runResult.mockImplementationOnce(() => { throw new Error('Blockchain Error'); });
-  smartManager.sendEditResult('ok response with blockchain exception', 'someName', new BigNumber(1), true);
+  smartManager.sendEditResult('ok response with blockchain exception', 'someName', '', new BigNumber(1), true);
   expect(smartManager.sendEditResult).not.toThrow();
 });
 
@@ -93,7 +93,7 @@ test('adds edit callback', () => {
 test('dispatches edit event', () => {
   expect.assertions(0);
   try {
-    smartManager.dispatchEditEvent(new EditEventData('', 2, '', new BigNumber(1)));
+    smartManager.dispatchEditEvent(new EditEventData('', '', 2, '', new BigNumber(1)));
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }

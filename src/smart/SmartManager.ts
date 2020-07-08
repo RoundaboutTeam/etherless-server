@@ -46,7 +46,7 @@ abstract class SmartManager {
       * @param success 'true' if the request was successful, 'false' otherwise.
       * @return void
     */
-    abstract sendRunResult(response: string, id: BigNumber, error: boolean): void;
+    abstract sendRunResult(response: string, id: BigNumber, success: boolean): void;
 
     /**
       * @desc sends the result of a previously received deploy request back to the event source.
@@ -58,7 +58,7 @@ abstract class SmartManager {
       * @param success 'true' if the request was successful, 'false' otherwise.
       * @return void
     */
-    abstract sendDeployResult(response: string, functionName: string, id: BigNumber, error: boolean): void;
+    abstract sendDeployResult(response: string, functionName: string, id: BigNumber, success: boolean): void;
 
     /**
       * @desc sends the result of a previously received delete request back to the event source.
@@ -70,7 +70,7 @@ abstract class SmartManager {
       * @param success 'true' if the request was successful, 'false' otherwise.
       * @return void
     */
-   abstract sendDeleteResult(response: string, functionName: string, id: BigNumber, error: boolean): void;
+   abstract sendDeleteResult(response: string, functionName: string, id: BigNumber, success: boolean): void;
 
    /**
      * @desc sends the result of a previously received edit request back to the event source.
@@ -82,7 +82,7 @@ abstract class SmartManager {
      * @param success 'true' if the request was successful, 'false' otherwise.
      * @return void
    */
-   abstract sendEditResult(response: string, functionName: string, signature: string, id: BigNumber, error: boolean): void;
+   abstract sendEditResult(response: string, functionName: string, signature: string, id: BigNumber, success: boolean): void;
 
    /**
       * @desc allows to subscribe a callback to the runDispatcher attribute.
