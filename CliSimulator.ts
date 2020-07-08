@@ -48,6 +48,24 @@ class CliSimulator {
     } catch (error) { console.log('deployFunction Error:\n', error); }
   }
 
+  async editFunction(filePath: string, function_name: any, parameters_signature: string, description: string) {
+    try {
+      await fs.readFile(filePath, async (err: any, data: any) => {
+        if (err) {
+          console.log(err);
+        } else {
+          try {
+            const ipfsPath = await this.ipfsManager.saveOnIpfs(data);
+            const tx = await this.contract.editFunction(function_name, parameters_signature, ipfsPath, { value: ethers.utils.parseEther('0.0001') });
+            await tx.wait();
+          } catch (error) {
+            console.log('editFunction error: ', error);
+          }
+        }
+      });
+    } catch (error) { console.log('editFunction Error:\n', error); }
+  }
+
   async deleteFunction(function_name: any) {
     try {
       const tx = await this.contract.deleteFunction(function_name, { value: ethers.utils.parseEther('0.0001') });
@@ -58,14 +76,9 @@ class CliSimulator {
   async getList() {
     try {
       console.log('Getting functions list..');
-      const result = await this.contract.getList();
-      for (let i = 0; i < result.length; i += 1) {
-        result[i] = ethers.utils.parseBytes32String(result[i]);
-      }
-      return result;
-    } catch (error) {
-      console.log('getList Error:\n', error);
-      return undefined;
+      return await this.contract.getFuncList();
+    } catch (err) {
+      console.log('getList Error: ', err);
     }
   }
 }

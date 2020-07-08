@@ -5,6 +5,7 @@ import IpfsManager from '../ipfs/IpfsManager';
 import RunEventData from '../event/RunEventData';
 import DeployEventData from '../event/DeployEventData';
 import DeleteEventData from '../event/DeleteEventData';
+import EditEventData from '../event/EditEventData';
 
 /**
   * @desc class used to orchestrate the steps of the requests processing.
@@ -42,6 +43,10 @@ class EventProcessor implements IEventProcessor {
       // The method processDeleteEvent is set to be executed upon listening to a DeleteEvent.
       this.smartManager.onDelete((data:DeleteEventData) => {
         this.processDeleteEvent(data);
+      });
+
+      this.smartManager.onEdit((data:EditEventData) => {
+        this.processEditEvent(data);
       });
     }
 
@@ -91,6 +96,23 @@ class EventProcessor implements IEventProcessor {
         this.smartManager.sendDeleteResult(result, data.functionName, data.id, true);
       } catch (err) {
         this.smartManager.sendDeleteResult(err.message, data.functionName, data.id, false);
+      }
+    }
+
+    /**
+    * @async
+    * @desc processes the given EditEventData object by calling the AWSManager class.
+    * @method editDeployEvent
+    * @param data EditEventData class object, content of the request to be processed.
+    * @return Promise<string> - deployment success or error message.
+    */
+    async processEditEvent(data: EditEventData) {
+      try {
+        const fileBuffer = await this.ipfsManager.getFileContent(data.ipfsPath);
+        const result = await this.awsManager.editLambda(data.functionName, data.parametersCount, fileBuffer);
+        this.smartManager.sendEditResult(result, data.functionName, data.signature, data.id, true);
+      } catch (err) {
+        this.smartManager.sendEditResult(err.message, data.functionName, data.signature, data.id, false);
       }
     }
 }

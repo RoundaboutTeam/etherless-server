@@ -1,6 +1,8 @@
 import RunEventData from '../event/RunEventData';
 import DeployEventData from '../event/DeployEventData';
 import DeleteEventData from '../event/DeleteEventData';
+import EditEventData from '../event/EditEventData';
+
 /**
   * @interface
   * @desc interface that provides processing methods for each type of event.
@@ -35,4 +37,13 @@ export default interface IEventProcessor {
     * @return void - delete success or error message.
   */
   processDeleteEvent(data: DeleteEventData): void;
+
+  /**
+    * @abstract
+    * @desc processes the given EditEventData object.
+    * @method processEditEvent
+    * @param data EditEventData class object, content of the request to be processed.
+    * @return void - edit success or error message.
+  */
+  processEditEvent(data: EditEventData): void;
 };

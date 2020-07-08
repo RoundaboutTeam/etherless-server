@@ -59,7 +59,7 @@ test('correctly returns valid lambda deploy responses', async () => {
   }
 });
 
-test('correctly handles error in Deployer lambda invocation', async () => {
+test('correctly handles error in Deployer lambda invocation in deployFunction function', async () => {
   const resultMock = {
     FunctionError: 'UnhandledError',
     Payload: JSON.stringify({
@@ -90,13 +90,6 @@ test('correctly handles error in createFunction invocation from the Deployer', a
   }
 });
 
-
-
-
-
-
-
-
 test('correctly returns valid lambda delete responses', async () => {
   AWS.mockDeletePromise(lambdaMock, Promise.resolve());
   try {
@@ -113,6 +106,51 @@ test('correctly handles error in deleteFunction invocation', async () => {
   try {
     await awsManager.deleteLambda('nonExisitngFunctionName');
   } catch (err) {
-    expect(err.message).toBe('Function with name nonExisitngFunctionName could not be deleted');
+    expect(err.message).toBe('nonExisitngFunctionName could not be deleted');
+  }
+});
+
+
+
+
+
+test('correctly returns valid lambda edit responses', async () => {
+  AWS.mockInvokePromise(lambdaMock, Promise.resolve({ Payload: '{}' }));
+  try {
+    const result = await awsManager.editLambda('foo', 2, Buffer.from('code example'));
+    expect(result).toBe('foo successfully edited');
+  } catch (err) {
+    throw new Error(`test failed with error: ${err}`);
+  }
+});
+
+test('correctly handles error in Deployer lambda invocation in editLambda function', async () => {
+  const resultMock = {
+    FunctionError: 'UnhandledError',
+    Payload: JSON.stringify({
+      errorMessage: 'FunctionNotFound',
+    }),
+  };
+  AWS.mockInvokePromise(lambdaMock, Promise.resolve(resultMock));
+  try {
+    await awsManager.editLambda('foo', 2, Buffer.from('code example'));
+    expect.assertions(1);
+  } catch (err) {
+    expect(err.message).toBe('FunctionNotFound');
+  }
+});
+
+test('correctly handles error in updateFunctionCode invocation from the Deployer', async () => {
+  const resultMock = {
+    Payload: JSON.stringify({
+      message: 'Error in updateFunctionCode in Deployer',
+    }),
+  };
+  AWS.mockInvokePromise(lambdaMock, Promise.resolve(resultMock));
+  try {
+    await awsManager.editLambda('foo', 2, Buffer.from('code example'));
+    expect.assertions(1);
+  } catch (err) {
+    expect(err.message).toBe('Error in updateFunctionCode in Deployer');
   }
 });
