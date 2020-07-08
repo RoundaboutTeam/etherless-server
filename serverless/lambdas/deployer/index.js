@@ -95,19 +95,11 @@ module.exports.deploy = async (event) => {
   const zipContent = buildZip();
   // removes the previously created folder
   fs.removeSync('/tmp/upload');
-  // requested an edit for an already existing function
-  if (event.edit === true) {
-    try {
+
+  try {
+    if (event.edit) {
       return await editFunction(event.functionName, zipContent);
-    } catch (err) {
-      return err;
     }
-  } else {
-  // requested a fresh deploy of a non existing function
-    try {
-      return await deployFunction(event.functionName, zipContent);
-    } catch (err) {
-      return err;
-    }
-  }
+    return await deployFunction(event.functionName, zipContent);
+  } catch (err) { return err; }
 };
