@@ -1,9 +1,13 @@
 
-const JSZip = require('jszip');
-
 const AWS = require('aws-sdk');
 
 const Lambda = require('aws-sdk/clients/lambda');
+
+const fs = require('fs-extra');
+
+const Zip = require('adm-zip');
+
+const { execSync } = require('child_process');
 
 function injectDefaultHandler(content, functionName, parametersCount) {
   const p = 'const p = event.parameters;';
@@ -22,15 +26,14 @@ function injectDefaultHandler(content, functionName, parametersCount) {
 }
 
 // returns a buffer reppresenting the zip folder
-async function buildZip(content) {
-  const zip = new JSZip();
-
-  zip.file('index.js', content);
-  const c = await zip.generateAsync({ type: 'nodebuffer' }).then((result) => result);
+function buildZip() {
+  const zipper = new Zip();
+  zipper.addLocalFolder('/tmp/upload');
+  const c = zipper.toBuffer();
   return c;
 }
 
-// deploys a new function with the fiven parameters
+// deploys a new function with the given parameters
 async function deployFunction(functionName, zipContent) {
   const lambda = new Lambda();
 
@@ -71,22 +74,40 @@ async function editFunction(functionName, zipContent) {
 module.exports.deploy = async (event) => {
   // common for both deploy and edit
   const fixBuffer = Buffer.from(event.fileBuffer.data);
-  const fileContent = injectDefaultHandler(fixBuffer.toString('utf8'), event.functionName, event.parametersCount);
-  const zipContent = await buildZip(fileContent);
-
+  const fixJSON = JSON.parse(fixBuffer.toString());
+  const dir = '/tmp/upload';
+  // creates the folder that will keep the files to be used
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+  // generates the files to be inserted into the Lambda Deployment package,
+  // after having performed the specified management actions
+  const fileContent = injectDefaultHandler(fixJSON.sourceCode.toString('utf8'), event.functionName, event.parametersCount);
+  fs.writeFileSync('/tmp/upload/index.js', fileContent);
+  if (event.dep === true) {
+    fs.writeFileSync('/tmp/upload/package.json', fixJSON.package);
+    fs.writeFileSync('/tmp/upload/package-lock.json', fixJSON.package_lock);
+    execSync('npm install --no-bin-links', {
+      cwd: '/tmp/upload/',
+    });
+  }
+  // builds a Lambda Deployment package
+  const zipContent = buildZip();
+  // removes the previously created folder
+  fs.removeSync('/tmp/upload');
   // requested an edit for an already existing function
-  if (event.edit) {
+  if (event.edit === true) {
     try {
       return await editFunction(event.functionName, zipContent);
     } catch (err) {
       return err;
     }
-  }
-
+  } else {
   // requested a fresh deploy of a non existing function
-  try {
-    return await deployFunction(event.functionName, zipContent);
-  } catch (err) {
-    return err;
+    try {
+      return await deployFunction(event.functionName, zipContent);
+    } catch (err) {
+      return err;
+    }
   }
 };

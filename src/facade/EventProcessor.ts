@@ -76,7 +76,7 @@ class EventProcessor implements IEventProcessor {
     async processDeployEvent(data: DeployEventData) {
       try {
         const fileBuffer = await this.ipfsManager.getFileContent(data.ipfsPath);
-        const result = await this.awsManager.deployFunction(data.functionName, data.parametersCount, fileBuffer);
+        const result = await this.awsManager.deployFunction(data.functionName, data.parametersCount, fileBuffer, data.dep);
         this.smartManager.sendDeployResult(result, data.functionName, data.id, true);
       } catch (err) {
         this.smartManager.sendDeployResult(err.message, data.functionName, data.id, false);
@@ -109,7 +109,7 @@ class EventProcessor implements IEventProcessor {
     async processEditEvent(data: EditEventData) {
       try {
         const fileBuffer = await this.ipfsManager.getFileContent(data.ipfsPath);
-        const result = await this.awsManager.editLambda(data.functionName, data.parametersCount, fileBuffer);
+        const result = await this.awsManager.editLambda(data.functionName, data.parametersCount, fileBuffer, data.dep);
         this.smartManager.sendEditResult(result, data.functionName, data.signature, data.id, true);
       } catch (err) {
         this.smartManager.sendEditResult(err.message, data.functionName, data.signature, data.id, false);

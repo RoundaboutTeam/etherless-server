@@ -26,18 +26,18 @@ class EthereumSmartManager extends SmartManager {
         this.dispatchRunEvent(new RunEventData(functionName, parameters.split(','), id));
       });
 
-      this.contract.on('deployRequest', (functionName: string, parametersSignature: string, ipfsPath: string, id: BigNumber) => {
+      this.contract.on('deployRequest', (functionName: string, parametersSignature: string, ipfsPath: string, dep: boolean, id: BigNumber) => {
         const paramsCount = EthereumSmartManager.getParametersCount(parametersSignature);
-        this.dispatchDeployEvent(new DeployEventData(functionName, paramsCount, ipfsPath, id));
+        this.dispatchDeployEvent(new DeployEventData(functionName, paramsCount, ipfsPath, dep, id));
       });
 
       this.contract.on('deleteRequest', (functionName: string, id: BigNumber) => {
         this.dispatchDeleteEvent(new DeleteEventData(functionName, id));
       });
 
-      this.contract.on('editRequest', (functionName: string, parametersSignature: string, ipfsPath: string, id: BigNumber) => {
+      this.contract.on('editRequest', (functionName: string, parametersSignature: string, ipfsPath: string, dep: boolean, id: BigNumber) => {
         const paramsCount = EthereumSmartManager.getParametersCount(parametersSignature);
-        this.dispatchEditEvent(new EditEventData(functionName, parametersSignature, paramsCount, ipfsPath, id));
+        this.dispatchEditEvent(new EditEventData(functionName, parametersSignature, paramsCount, ipfsPath, dep, id));
       });
     }
 
