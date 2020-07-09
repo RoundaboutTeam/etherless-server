@@ -9,7 +9,7 @@ const ipfsMock = new IPFS.Ipfs();
 const ipfsManager = new IpfsManager(ipfsMock);
 
 test('getFileContent correctly returns result', async () => {
-  ipfsMock.cat = jest.fn().mockImplementationOnce(() => {
+  ipfsMock.catJSON = jest.fn().mockImplementationOnce(() => {
     return Promise.resolve(Buffer.from('Some mocked content'));
   });
 
@@ -18,7 +18,7 @@ test('getFileContent correctly returns result', async () => {
 });
 
 test('getFileContent correctly manages exception', async () => {
-  ipfsMock.cat = jest.fn().mockImplementationOnce(() => {
+  ipfsMock.catJSON = jest.fn().mockImplementationOnce(() => {
     return Promise.reject(new Error('some ipfs error'));
   });
   expect.assertions(1);
@@ -32,7 +32,7 @@ test('getFileContent correctly manages exception', async () => {
 
 
 test('saveOnIpfs correctly returns result', async () => {
-  ipfsMock.add = jest.fn().mockImplementationOnce(() => {
+  ipfsMock.addJSON = jest.fn().mockImplementationOnce(() => {
     return Promise.resolve('IPFS Path Here');
   });
 
@@ -41,7 +41,7 @@ test('saveOnIpfs correctly returns result', async () => {
 });
 
 test('saveOnIpfs correctly manages exception', async () => {
-  ipfsMock.add = jest.fn().mockImplementationOnce(() => {
+  ipfsMock.addJSON = jest.fn().mockImplementationOnce(() => {
     return Promise.reject(new Error('Unable to upload file on IPFS'));
   });
 

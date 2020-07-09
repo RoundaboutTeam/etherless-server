@@ -40,7 +40,7 @@ class IpfsManager {
   */
   public async saveOnIpfs(buffer: Buffer) : Promise<string> {
     return new Promise((resolve, reject) => {
-      this.ipfs.add(buffer.toString('hex'))
+      this.ipfs.addJSON(buffer.toString('hex'))
         .then(resolve)
         .catch((error: Error) => {
           reject(new Error(`There was an error saving the file on IPFS: ${error}`));

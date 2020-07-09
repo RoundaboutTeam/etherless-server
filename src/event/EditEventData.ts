@@ -8,7 +8,6 @@ import EventData from './EventData';
   * @attr signature - function parameters signature.
   * @attr parametersCount - the number of parameters required by the function to be edited
   * @attr ipfsPath - string identifying the IPFS location of the file to be used for the edit
-  * @attr dep - boolean identifing whether function dependencies should be handled or not.
   * @uses ethers
   * @uses EventData
 */
@@ -21,15 +20,12 @@ class EditEventData extends EventData {
 
     public readonly ipfsPath: string;
 
-    public readonly dep: boolean;
-
-    constructor(functionName: string, signature: string, parametersCount: number, ipfsPath: string, dep: boolean, id: BigNumber) {
+    constructor(functionName: string, signature: string, parametersCount: number, ipfsPath: string, id: BigNumber) {
       super(id);
       this.functionName = functionName;
       this.signature = signature;
       this.parametersCount = parametersCount;
       this.ipfsPath = ipfsPath;
-      this.dep = dep;
     }
 }
 

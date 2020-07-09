@@ -47,14 +47,13 @@ class AwsManager {
     * @param dep boolean flag, indicating if the operation should handle the function dependencies.
     * @return Promise<string> - deployment success or error message.
     */
-    async deployFunction(functionName: string, parametersCount: number, fileBuffer: Buffer, dep: boolean) {
+    async deployFunction(functionName: string, parametersCount: number, fileBuffer: Buffer) {
       const parameters = {
         FunctionName: 'etherless-dev-deploy',
         Payload: JSON.stringify({
           functionName: functionName,
           parametersCount: parametersCount,
           fileBuffer: fileBuffer,
-          dep: dep,
         }),
       };
       try {
@@ -101,7 +100,7 @@ class AwsManager {
     * @param dep boolean flag, indicating if the operation should handle the function dependencies.
     * @return Promise<string> - edit success or error message.
     */
-    async editLambda(functionName: string, parametersCount: number, fileBuffer: Buffer, dep: boolean): Promise<string> {
+    async editLambda(functionName: string, parametersCount: number, fileBuffer: Buffer): Promise<string> {
       const parameters = {
         // the edit steps are very similar to the deployment steps, therefore the deployer is used in both cases
         FunctionName: 'etherless-dev-deploy',
@@ -110,7 +109,6 @@ class AwsManager {
           parametersCount: parametersCount,
           fileBuffer: fileBuffer,
           edit: true,
-          dep: dep,
         }),
       };
 

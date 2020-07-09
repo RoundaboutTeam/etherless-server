@@ -26,18 +26,18 @@ class EthereumSmartManager extends SmartManager {
         this.dispatchRunEvent(new RunEventData(functionName, parameters.split(','), id));
       });
 
-      this.contract.on('deployRequest', (functionName: string, parametersSignature: string, ipfsPath: string, dep: boolean, id: BigNumber) => {
+      this.contract.on('deployRequest', (functionName: string, parametersSignature: string, ipfsPath: string, id: BigNumber) => {
         const paramsCount = EthereumSmartManager.getParametersCount(parametersSignature);
-        this.dispatchDeployEvent(new DeployEventData(functionName, paramsCount, ipfsPath, dep, id));
+        this.dispatchDeployEvent(new DeployEventData(functionName, paramsCount, ipfsPath, id));
       });
 
       this.contract.on('deleteRequest', (functionName: string, id: BigNumber) => {
         this.dispatchDeleteEvent(new DeleteEventData(functionName, id));
       });
 
-      this.contract.on('editRequest', (functionName: string, parametersSignature: string, ipfsPath: string, dep: boolean, id: BigNumber) => {
+      this.contract.on('editRequest', (functionName: string, parametersSignature: string, ipfsPath: string, id: BigNumber) => {
         const paramsCount = EthereumSmartManager.getParametersCount(parametersSignature);
-        this.dispatchEditEvent(new EditEventData(functionName, parametersSignature, paramsCount, ipfsPath, dep, id));
+        this.dispatchEditEvent(new EditEventData(functionName, parametersSignature, paramsCount, ipfsPath, id));
       });
     }
 
@@ -99,15 +99,15 @@ class EthereumSmartManager extends SmartManager {
       * The response contains a message and useful request related information.
       * @method sendEditResult
       * @param response response message.
-      * @param signature function parameters signature.
       * @param functionName name of the edited function.
+      * @param signature function parameters signature.
       * @param id request id.
       * @param success 'true' if the request was successful, 'false' otherwise.
       * @return void
     */
     sendEditResult(response: string, functionName: string, signature: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.editResult(`{ "message": "${response}" }`, signature, functionName, id, success);
+        this.contract.editResult(`{ "message": "${response}" }`, functionName, signature, id, success);
       } catch (err) {
         // retry sending message again here
       }

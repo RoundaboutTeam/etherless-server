@@ -84,7 +84,7 @@ module.exports.deploy = async (event) => {
   // after having performed the specified management actions
   const fileContent = injectDefaultHandler(fixJSON.sourceCode.toString('utf8'), event.functionName, event.parametersCount);
   fs.writeFileSync('/tmp/upload/index.js', fileContent);
-  if (event.dep === true) {
+  if (event.fixJSON.dep === true) {
     fs.writeFileSync('/tmp/upload/package.json', fixJSON.package);
     fs.writeFileSync('/tmp/upload/package-lock.json', fixJSON.package_lock);
     execSync('npm install --no-bin-links', {
