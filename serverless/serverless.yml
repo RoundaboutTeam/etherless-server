@@ -10,5 +10,6 @@ provider:
 functions:
   deploy:
     handler: lambdas/deployer/index.deploy
+    timeout: 30
     environment:
       HOME: /tmp
