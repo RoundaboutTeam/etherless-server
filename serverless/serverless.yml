@@ -10,3 +10,5 @@ provider:
 functions:
   deploy:
     handler: lambdas/deployer/index.deploy
+    environment:
+      HOME: /tmp
