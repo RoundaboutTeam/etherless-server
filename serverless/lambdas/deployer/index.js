@@ -45,6 +45,7 @@ async function deployFunction(functionName, zipContent) {
     Handler: 'index.defaultHandler',
     Role: 'arn:aws:iam::817867361406:role/etherless-server',
     Runtime: 'nodejs12.x',
+    Timeout: 10,
   };
 
   try {
@@ -73,8 +74,8 @@ async function editFunction(functionName, zipContent) {
 // manages the deployment process after checking if it's a new deploy or an edit-deploy
 module.exports.deploy = async (event) => {
   // common for both deploy and edit
-  const fixBuffer = Buffer.from(event.fileBuffer.data);
-  const fixJSON = JSON.parse(fixBuffer.toString());
+  const fixBuffer = Buffer.from(event.fileBuffer);
+  const fixJSON = JSON.parse(fixBuffer.toString('utf8'));
   const dir = '/tmp/upload';
   // creates the folder that will keep the files to be used
   if (!fs.existsSync(dir)) {
@@ -84,7 +85,7 @@ module.exports.deploy = async (event) => {
   // after having performed the specified management actions
   const fileContent = injectDefaultHandler(fixJSON.sourceCode.toString('utf8'), event.functionName, event.parametersCount);
   fs.writeFileSync('/tmp/upload/index.js', fileContent);
-  if (event.fixJSON.dep === true) {
+  if (fixJSON.dep === true) {
     fs.writeFileSync('/tmp/upload/package.json', fixJSON.package);
     fs.writeFileSync('/tmp/upload/package-lock.json', fixJSON.package_lock);
     execSync('npm install --no-bin-links', {
