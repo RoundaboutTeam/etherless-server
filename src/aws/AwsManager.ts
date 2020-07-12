@@ -30,7 +30,9 @@ class AwsManager {
         const payload = JSON.parse(data.Payload);
         if (data.FunctionError) {
           return Promise.resolve(payload.errorMessage); // runtime exceptions are considered valid results
-        } return Promise.resolve(payload.message);
+        } if (payload.message !== undefined) { // error in function code, the function returned undefined
+          return Promise.resolve(payload.message);
+        } return Promise.resolve(`Something went wrong! ${functionName} execution returned undefined.`);
       } catch (err) {
         return Promise.reject(new Error(err.message));
       }
