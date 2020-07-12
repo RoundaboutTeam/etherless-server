@@ -45,17 +45,17 @@ class AwsManager {
     * @method deployLambda
     * @param functionName name of the function to be deployed.
     * @param parametersCount number of parameters required by the function.
-    * @param fileBuffer Buffer containing a stringified version of the function to be deployed.
+    * @param requestBuffer Buffer containing a hexadecimal stringified version of the request.
     * @param dep boolean flag, indicating if the operation should handle the function dependencies.
     * @return Promise<string> - deployment success or error message.
     */
-    async deployFunction(functionName: string, parametersCount: number, fileBuffer: Buffer) {
+    async deployLambda(functionName: string, parametersCount: number, requestBuffer: Buffer) {
       const parameters = {
         FunctionName: 'etherless-dev-deploy',
         Payload: JSON.stringify({
           functionName: functionName,
           parametersCount: parametersCount,
-          fileBuffer: fileBuffer,
+          requestBuffer: requestBuffer,
         }),
       };
       try {
@@ -98,18 +98,18 @@ class AwsManager {
     * @method editLambda
     * @param functionName name of the function to be deployed.
     * @param parametersCount number of parameters required by the function.
-    * @param fileBuffer Buffer containing a stringified version of the function to be deployed.
+    * @param requestBuffer Buffer containing a hexadecimal stringified version of the request.
     * @param dep boolean flag, indicating if the operation should handle the function dependencies.
     * @return Promise<string> - edit success or error message.
     */
-    async editLambda(functionName: string, parametersCount: number, fileBuffer: Buffer): Promise<string> {
+    async editLambda(functionName: string, parametersCount: number, requestBuffer: Buffer): Promise<string> {
       const parameters = {
         // the edit steps are very similar to the deployment steps, therefore the deployer is used in both cases
         FunctionName: 'etherless-dev-deploy',
         Payload: JSON.stringify({
           functionName: functionName,
           parametersCount: parametersCount,
-          fileBuffer: fileBuffer,
+          requestBuffer: requestBuffer,
           edit: true,
         }),
       };

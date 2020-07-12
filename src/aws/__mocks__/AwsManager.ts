@@ -10,7 +10,7 @@ const AwsManager = {
           }),
         };
       }),
-      deployFunction: jest.fn(() => {
+      deployLambda: jest.fn(() => {
         return {
           promise: jest.fn(() => {
             console.log('DEPLOY PROMISE IS REJECTED BY DEFAULT');
@@ -42,7 +42,7 @@ const AwsManager = {
     });
   },
   deploySet(Manager: any, promise: any) {
-    Manager.deployFunction = jest.fn().mockImplementationOnce(() => {
+    Manager.deployLambda = jest.fn().mockImplementationOnce(() => {
       return promise;
     });
   },

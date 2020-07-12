@@ -9,6 +9,14 @@ const Zip = require('adm-zip');
 
 const { execSync } = require('child_process');
 
+/**
+  * @desc builds the defaultHandler function and returns the new file content
+  * @method injectDefaultHandler
+  * @param content the content of the file to be deployed in format string
+  * @param functionName name of the function to be called in the defaultHandler
+  * @param parametersCount number of parameters to be used for the function invocation in the defaultHandler
+  * @return string - the content merged with the defaultHandler function
+*/
 function injectDefaultHandler(content, functionName, parametersCount) {
   const p = 'const p = event.parameters;';
   let params = '';
@@ -25,7 +33,11 @@ function injectDefaultHandler(content, functionName, parametersCount) {
   ${content}`;
 }
 
-// returns a buffer reppresenting the zip folder
+/**
+  * @desc returns a buffer representing a zip folder
+  * @method buildZip
+  * @return Buffer - a buffer representation of a zip folder
+*/
 function buildZip() {
   const zipper = new Zip();
   zipper.addLocalFolder('/tmp/upload');
@@ -33,7 +45,14 @@ function buildZip() {
   return c;
 }
 
-// deploys a new function with the given parameters
+/**
+  * @async
+  * @desc deploys a new function with the given parameters
+  * @method deployFunction
+  * @param functionName name of the function to be deployed
+  * @param zipContent a buffer representing the zip folder containing the files to be deployed
+  * @return string - success/failure response
+*/
 async function deployFunction(functionName, zipContent) {
   const lambda = new Lambda();
 
@@ -55,7 +74,14 @@ async function deployFunction(functionName, zipContent) {
   }
 }
 
-// edits an existing function with the given parameters
+/**
+  * @async
+  * @desc edits an existing function with the given parameters
+  * @method editFunction
+  * @param functionName name of the function to be edited
+  * @param zipContent a buffer representing the zip folder containing the files to be deployed in the edited function
+  * @return string - success/failure response
+*/
 async function editFunction(functionName, zipContent) {
   const lambda = new Lambda();
 
@@ -71,11 +97,24 @@ async function editFunction(functionName, zipContent) {
   }
 }
 
-// manages the deployment process after checking if it's a new deploy or an edit-deploy
+/**
+  * @async
+  * @desc manages the deployment process after checking if it's a new deploy or an edit-deploy
+  * @method deploy
+  * @param event contains all the necessary information for the deployment/edit procedure
+  * @param event.requestBuffer a hexadecimal representation of a JSON request
+  * @param event.requestBuffer.sourceCode content of the source code file
+  * @param event.requestBuffer.package content of the package file, present if event.requestBuffer.dep == true
+  * @param event.requestBuffer.package_lock content of the package_lock file, present if event.requestBuffer.dep == true
+  * @param event.requestBuffer.dep true if the deploying/editing a function with dependencies
+  * @param event.functionName the name of the function to be deployed/edited
+  * @param event.parametersCount the number of parameters required by the function
+  * @param event.edit true if the request received is an edit request, false for deployment requests
+  * @return string - success/failure response
+*/
 module.exports.deploy = async (event) => {
   // common for both deploy and edit
-  const fixBuffer = Buffer.from(event.fileBuffer);
-  const fixJSON = JSON.parse(fixBuffer.toString('utf8'));
+  const requestJSON = JSON.parse(Buffer.from(event.requestBuffer).toString('utf8'));
   const dir = '/tmp/upload';
   // creates the folder that will keep the files to be used
   if (!fs.existsSync(dir)) {
@@ -83,11 +122,11 @@ module.exports.deploy = async (event) => {
   }
   // generates the files to be inserted into the Lambda Deployment package,
   // after having performed the specified management actions
-  const fileContent = injectDefaultHandler(fixJSON.sourceCode.toString('utf8'), event.functionName, event.parametersCount);
+  const fileContent = injectDefaultHandler(requestJSON.sourceCode.toString('utf8'), event.functionName, event.parametersCount);
   fs.writeFileSync('/tmp/upload/index.js', fileContent);
-  if (fixJSON.dep === true) {
-    fs.writeFileSync('/tmp/upload/package.json', fixJSON.package);
-    fs.writeFileSync('/tmp/upload/package-lock.json', fixJSON.package_lock);
+  if (requestJSON.dep === true) {
+    fs.writeFileSync('/tmp/upload/package.json', requestJSON.package);
+    fs.writeFileSync('/tmp/upload/package-lock.json', requestJSON.package_lock);
     execSync('npm install --no-bin-links', {
       cwd: '/tmp/upload/',
     });

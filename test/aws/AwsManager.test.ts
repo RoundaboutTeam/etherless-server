@@ -52,14 +52,14 @@ test('correctly handles a generic Fatal Lambda error during run', async () => {
 test('correctly returns valid lambda deploy responses', async () => {
   AWS.mockInvokePromise(lambdaMock, Promise.resolve({ Payload: '{}' }));
   try {
-    const result = await awsManager.deployFunction('foo', 2, Buffer.from('code example'));
+    const result = await awsManager.deployLambda('foo', 2, Buffer.from('code example'));
     expect(result).toBe('foo successfully deployed');
   } catch (err) {
     throw new Error(`test failed with error: ${err}`);
   }
 });
 
-test('correctly handles error in Deployer lambda invocation in deployFunction function', async () => {
+test('correctly handles error in Deployer lambda invocation in deployLambda function', async () => {
   const resultMock = {
     FunctionError: 'UnhandledError',
     Payload: JSON.stringify({
@@ -68,7 +68,7 @@ test('correctly handles error in Deployer lambda invocation in deployFunction fu
   };
   AWS.mockInvokePromise(lambdaMock, Promise.resolve(resultMock));
   try {
-    await awsManager.deployFunction('foo', 2, Buffer.from('code example'));
+    await awsManager.deployLambda('foo', 2, Buffer.from('code example'));
     expect.assertions(1);
   } catch (err) {
     expect(err.message).toBe('FunctionNotFound');
@@ -83,7 +83,7 @@ test('correctly handles error in createFunction invocation from the Deployer', a
   };
   AWS.mockInvokePromise(lambdaMock, Promise.resolve(resultMock));
   try {
-    await awsManager.deployFunction('foo', 2, Buffer.from('code example'));
+    await awsManager.deployLambda('foo', 2, Buffer.from('code example'));
     expect.assertions(1);
   } catch (err) {
     expect(err.message).toBe('Error in createFunction in Deployer');
