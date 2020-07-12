@@ -114,7 +114,8 @@ async function editFunction(functionName, zipContent) {
 */
 module.exports.deploy = async (event) => {
   // common for both deploy and edit
-  const requestJSON = JSON.parse(Buffer.from(event.requestBuffer).toString('utf8'));
+  const requestBuf = Buffer.from(event.requestBuffer);
+  const requestJSON = JSON.parse(requestBuf.toString('utf8'));
   const dir = '/tmp/upload';
   // creates the folder that will keep the files to be used
   if (!fs.existsSync(dir)) {

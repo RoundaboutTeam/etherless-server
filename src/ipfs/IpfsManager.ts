@@ -24,7 +24,7 @@ class IpfsManager {
   public async getFileContent(ipfsPath : string) : Promise<Buffer> {
     return new Promise((resolve, reject) => {
       this.ipfs.catJSON(ipfsPath)
-        .then((result: JSON) => resolve(Buffer.from(JSON.stringify(result), 'hex')))
+        .then((result: JSON) => resolve(Buffer.from(JSON.stringify(result))))
         .catch((error: Error) => {
           reject(new Error(`There was an error fetching the file from the given path: ${error}`));
         });
