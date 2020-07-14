@@ -11,15 +11,18 @@ import EditEventData from '../event/EditEventData';
   * create processing requests and send responses to the external events source.
   * @attr runEventDispatcher - EventDispatcher object, used to dispatch run processing requests
   * represented by RunEventData objects.
-  * @attr runDeployDispatcher - EventDispatcher object, used to dispatch deploy processing requests
+  * @attr deployEventDispatcher - EventDispatcher object, used to dispatch deploy processing requests
   * represented by DeployEventData objects.
-  * @attr runDeleteDispatcher - EventDispatcher object, used to dispatch delete processing requests
+  * @attr deleteEventDispatcher - EventDispatcher object, used to dispatch delete processing requests
   * represented by DeleteEventData objects.
+  * @attr editEventDispatcher - EventDispatcher object, used to dispatch edit processing requests
+  * represented by EditEventData objects.
   * @uses ethers
   * @uses EventDispatcher
   * @uses DeployEventData
   * @uses RunEventData
   * @uses DeleteEventData
+  * @uses EditEventData
 */
 abstract class SmartManager {
     protected runEventDispatcher: EventDispatcher;
@@ -46,7 +49,7 @@ abstract class SmartManager {
       * @param success 'true' if the request was successful, 'false' otherwise.
       * @return void
     */
-    abstract sendRunResult(response: string, id: BigNumber, error: boolean): void;
+    abstract sendRunResult(response: string, id: BigNumber, success: boolean): void;
 
     /**
       * @desc sends the result of a previously received deploy request back to the event source.
@@ -58,7 +61,7 @@ abstract class SmartManager {
       * @param success 'true' if the request was successful, 'false' otherwise.
       * @return void
     */
-    abstract sendDeployResult(response: string, functionName: string, id: BigNumber, error: boolean): void;
+    abstract sendDeployResult(response: string, functionName: string, id: BigNumber, success: boolean): void;
 
     /**
       * @desc sends the result of a previously received delete request back to the event source.
@@ -70,7 +73,7 @@ abstract class SmartManager {
       * @param success 'true' if the request was successful, 'false' otherwise.
       * @return void
     */
-   abstract sendDeleteResult(response: string, functionName: string, id: BigNumber, error: boolean): void;
+   abstract sendDeleteResult(response: string, functionName: string, id: BigNumber, success: boolean): void;
 
    /**
      * @desc sends the result of a previously received edit request back to the event source.
@@ -82,7 +85,7 @@ abstract class SmartManager {
      * @param success 'true' if the request was successful, 'false' otherwise.
      * @return void
    */
-   abstract sendEditResult(response: string, functionName: string, signature: string, id: BigNumber, error: boolean): void;
+   abstract sendEditResult(response: string, functionName: string, signature: string, id: BigNumber, success: boolean): void;
 
    /**
       * @desc allows to subscribe a callback to the runDispatcher attribute.
