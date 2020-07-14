@@ -9,11 +9,11 @@ const IPFS = require('ipfs-mini');
   * @uses ipfs-mini
 */
 class IpfsConfig {
-    public readonly host: string;
+    private host: string;
 
-    public readonly port: number;
+    private port: number;
 
-    public readonly protocol: string;
+    private protocol: string;
 
     constructor(host: string, port: number, protocol: string) {
       this.host = host;
