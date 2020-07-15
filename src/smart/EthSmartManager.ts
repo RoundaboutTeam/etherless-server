@@ -52,7 +52,7 @@ class EthereumSmartManager extends SmartManager {
     */
     sendRunResult(response: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.runResult(`{ "message": "${response}" }`, id, success);
+        this.contract.runResult(JSON.stringify({ message: response }), id, success);
       } catch (err) {
         // retry sending message again here
       }
@@ -70,7 +70,7 @@ class EthereumSmartManager extends SmartManager {
     */
     sendDeployResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.deployResult(`{ "message": "${response}" }`, functionName, id, success);
+        this.contract.deployResult(JSON.stringify({ message: response }), functionName, id, success);
       } catch (err) {
         // retry sending message again here
       }
@@ -88,7 +88,7 @@ class EthereumSmartManager extends SmartManager {
     */
     sendDeleteResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.deleteResult(`{ "message": "${response}" }`, functionName, id, success);
+        this.contract.deleteResult(JSON.stringify({ message: response }), functionName, id, success);
       } catch (err) {
         // retry sending message again here
       }
@@ -107,7 +107,7 @@ class EthereumSmartManager extends SmartManager {
     */
     sendEditResult(response: string, functionName: string, signature: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.editResult(`{ "message": "${response}" }`, functionName, signature, id, success);
+        this.contract.editResult(JSON.stringify({ message: response }), functionName, signature, id, success);
       } catch (err) {
         // retry sending message again here
       }
