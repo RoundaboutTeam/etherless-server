@@ -4,10 +4,33 @@ Module for Ethereum events listening and managing of calls to AWS Lambda functio
 
 ## Instructions:
 - run `npm install` to install the necessary dependencies;
-- insert the configuration file, provided directly by our team, in the *configs* folder;
+- insert the configuration files, provided directly by our team, in the *configs* folder;
 - run `npm start` to run a local version of the listener.
 
 The listener is now up and running locally. It will capture function run requests, communicate with AWS Lambda and return the function invocation result to the caller.
+
+## Ethereum, AWS, IPFS Configurations and contract ABI
+Any developer who might want to work with a local version of Etherless-server, and can't contact our team to get the configuration files, should create an `AWSconfig.json` file structured as follows:
+`{
+		"awsKey": <<insert AWS key>>, 
+		"awsSecretKey": <<insert AWS secret key>>, 
+		"awsRegion": <<insert AWS region>> 
+}`
+To interact with the contracts on the Ethereum blockchain, a `smartConfig.json` file should be created with the following structure:
+`{
+	"walletAddress": <<insert wallet address>>, 
+	"privateKey": <<insert private key>>, 
+	"contractAddress": <<insert contract address>>, 
+	"networkName": <<insert network name>> 
+}`
+To interact with IPFS, using the `ipfs-mini` API, an `ipfsConfig.json` file should be created with the following structure:
+`{
+    "host": "ipfs.infura.io",
+    "port": 5001,
+    "protocol": "https"
+}`
+And lastly, the code needs the ABI of the smart contract it will interact with. An `abi.json` file containing the Etherless-smart contract ABI should then be created.
+The parameters within angular brackets should be replaced with the actual credentials and all the files be moved to the *Config* directory inside Etherless-server.
 
 ## Deployment on AWS Elastic Beanstalk
 In order to keep the Etherless-server module always active and running, it should be deployed on an AWS Elastic Beanstalk environment. To do that, you should:
