@@ -10,7 +10,7 @@ Module for Ethereum events listening and managing of calls to AWS Lambda functio
 The listener is now up and running locally. It will capture function run requests, communicate with AWS Lambda and return the function invocation result to the caller.
 
 ## Ethereum, AWS, IPFS Configurations and contract ABI
-Any developer who might want to work with a local version of Etherless-server, and can't contact our team to get the configuration files, should create an `AWSconfig.json` file structured as follows:<br /> <br /> 
+Any developer who might want to work with a local version of Etherless-server, and can't contact our team to get the configuration files, should create an `awsConfig.json` file structured as follows:<br /> <br /> 
 `{` <br /> 
 		`"awsKey": <<insert AWS key>>,` <br /> 
 		`"awsSecretKey": <<insert AWS secret key>>,`<br /> 
