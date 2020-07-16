@@ -52,7 +52,7 @@ class EthereumSmartManager extends SmartManager {
     */
     sendRunResult(response: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.runResult(`{ "message": "${response}" }`, id, success);
+        this.contract.runResult(JSON.stringify({ message: response }), id, success);
       } catch (err) {
         // retry sending message again here
       }
@@ -70,7 +70,7 @@ class EthereumSmartManager extends SmartManager {
     */
     sendDeployResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.deployResult(`{ "message": "${response}" }`, functionName, id, success);
+        this.contract.deployResult(JSON.stringify({ message: response }), functionName, id, success);
       } catch (err) {
         // retry sending message again here
       }
@@ -88,7 +88,7 @@ class EthereumSmartManager extends SmartManager {
     */
     sendDeleteResult(response: string, functionName: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.deleteResult(`{ "message": "${response}" }`, functionName, id, success);
+        this.contract.deleteResult(JSON.stringify({ message: response }), functionName, id, success);
       } catch (err) {
         // retry sending message again here
       }
@@ -99,15 +99,15 @@ class EthereumSmartManager extends SmartManager {
       * The response contains a message and useful request related information.
       * @method sendEditResult
       * @param response response message.
-      * @param signature function parameters signature.
       * @param functionName name of the edited function.
+      * @param signature function parameters signature.
       * @param id request id.
       * @param success 'true' if the request was successful, 'false' otherwise.
       * @return void
     */
     sendEditResult(response: string, functionName: string, signature: string, id: BigNumber, success: boolean): void {
       try {
-        this.contract.editResult(`{ "message": "${response}" }`, signature, functionName, id, success);
+        this.contract.editResult(JSON.stringify({ message: response }), functionName, signature, id, success);
       } catch (err) {
         // retry sending message again here
       }

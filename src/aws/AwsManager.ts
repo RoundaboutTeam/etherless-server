@@ -25,12 +25,15 @@ class AwsManager {
         FunctionName: `${functionName}`,
         Payload: JSON.stringify({ parameters: params }),
       };
+
       try {
         const data: any = await this.lambda.invoke(parameters).promise();
         const payload = JSON.parse(data.Payload);
         if (data.FunctionError) {
           return Promise.resolve(payload.errorMessage); // runtime exceptions are considered valid results
-        } return Promise.resolve(payload.message);
+        } if (payload.message !== undefined && payload.message !== null) {
+          return Promise.resolve(payload.message);
+        } return Promise.resolve(`Something went wrong! ${functionName} execution returned ${payload.message}.`);
       } catch (err) {
         return Promise.reject(new Error(err.message));
       }
@@ -43,16 +46,17 @@ class AwsManager {
     * @method deployLambda
     * @param functionName name of the function to be deployed.
     * @param parametersCount number of parameters required by the function.
-    * @param fileBuffer Buffer containing a stringified version of the function to be deployed.
+    * @param requestBuffer Buffer containing a hexadecimal stringified version of the request.
+    * @param dep boolean flag, indicating if the operation should handle the function dependencies.
     * @return Promise<string> - deployment success or error message.
     */
-    async deployFunction(functionName: string, parametersCount: number, fileBuffer: Buffer) {
+    async deployLambda(functionName: string, parametersCount: number, requestBuffer: Buffer) {
       const parameters = {
         FunctionName: 'etherless-dev-deploy',
         Payload: JSON.stringify({
           functionName: functionName,
           parametersCount: parametersCount,
-          fileBuffer: fileBuffer,
+          requestBuffer: requestBuffer,
         }),
       };
       try {
@@ -95,17 +99,18 @@ class AwsManager {
     * @method editLambda
     * @param functionName name of the function to be deployed.
     * @param parametersCount number of parameters required by the function.
-    * @param fileBuffer Buffer containing a stringified version of the function to be deployed.
+    * @param requestBuffer Buffer containing a hexadecimal stringified version of the request.
+    * @param dep boolean flag, indicating if the operation should handle the function dependencies.
     * @return Promise<string> - edit success or error message.
     */
-    async editLambda(functionName: string, parametersCount: number, fileBuffer: Buffer): Promise<string> {
+    async editLambda(functionName: string, parametersCount: number, requestBuffer: Buffer): Promise<string> {
       const parameters = {
         // the edit steps are very similar to the deployment steps, therefore the deployer is used in both cases
         FunctionName: 'etherless-dev-deploy',
         Payload: JSON.stringify({
           functionName: functionName,
           parametersCount: parametersCount,
-          fileBuffer: fileBuffer,
+          requestBuffer: requestBuffer,
           edit: true,
         }),
       };

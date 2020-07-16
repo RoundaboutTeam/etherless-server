@@ -11,15 +11,18 @@ import EditEventData from '../event/EditEventData';
   * create processing requests and send responses to the external events source.
   * @attr runEventDispatcher - EventDispatcher object, used to dispatch run processing requests
   * represented by RunEventData objects.
-  * @attr runDeployDispatcher - EventDispatcher object, used to dispatch deploy processing requests
+  * @attr deployEventDispatcher - EventDispatcher object, used to dispatch deploy processing requests
   * represented by DeployEventData objects.
-  * @attr runDeleteDispatcher - EventDispatcher object, used to dispatch delete processing requests
+  * @attr deleteEventDispatcher - EventDispatcher object, used to dispatch delete processing requests
   * represented by DeleteEventData objects.
+  * @attr editEventDispatcher - EventDispatcher object, used to dispatch edit processing requests
+  * represented by EditEventData objects.
   * @uses ethers
   * @uses EventDispatcher
   * @uses DeployEventData
   * @uses RunEventData
   * @uses DeleteEventData
+  * @uses EditEventData
 */
 abstract class SmartManager {
     protected runEventDispatcher: EventDispatcher;
