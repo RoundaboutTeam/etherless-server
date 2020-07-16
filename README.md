@@ -1,4 +1,4 @@
-# etherless-server
+# Etherless-server
 
 Module for Ethereum events listening and managing of calls to AWS Lambda functions.
 
