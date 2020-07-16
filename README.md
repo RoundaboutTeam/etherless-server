@@ -14,7 +14,7 @@ In order to keep the Etherless-server module always active and running, it shoul
 - log into AWS and go to AWS Elastic Beanstalk;
 - create a new application inside the EBS service;
 - locally generate a .zip archive with the content of the *etherless-server* folder;
-- deploy the zip archive as a new application version on EBS, which creates an EBS Node.js environment where your application will run;
+- deploy the zip archive as a new application version on EBS, which creates an EBS Node.js environment where your application will run.
 
 ## Deployment of the Lambda function deployer on AWS Lambda
 In addition to this process, in order to allow the serverless deployment of new functions on the platform, you should deploy on AWS Lambda a deployer function. The content of the deployer function is stored inside the *serverless* folder in the Etherless-server directory. To deploy this function using the Serverless Framework you should:
