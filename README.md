@@ -10,25 +10,25 @@ Module for Ethereum events listening and managing of calls to AWS Lambda functio
 The listener is now up and running locally. It will capture function run requests, communicate with AWS Lambda and return the function invocation result to the caller.
 
 ## Ethereum, AWS, IPFS Configurations and contract ABI
-Any developer who might want to work with a local version of Etherless-server, and can't contact our team to get the configuration files, should create an `AWSconfig.json` file structured as follows:<br /> 
+Any developer who might want to work with a local version of Etherless-server, and can't contact our team to get the configuration files, should create an `AWSconfig.json` file structured as follows:<br /> <br /> 
 `{` <br /> 
 		`"awsKey": <<insert AWS key>>,` <br /> 
 		`"awsSecretKey": <<insert AWS secret key>>,`<br /> 
 		`"awsRegion": <<insert AWS region>>` <br /> 
-`}`<br /> 
-To interact with the contracts on the Ethereum blockchain, a `smartConfig.json` file should be created with the following structure:<br /> 
+`}`<br /> <br /> 
+To interact with the contracts on the Ethereum blockchain, a `smartConfig.json` file should be created with the following structure:<br /> <br /> 
 `{` <br /> 
 	`"walletAddress": <<insert wallet address>>, ` <br /> 
 	`"privateKey": <<insert private key>>, ` <br /> 
 	`"contractAddress": <<insert contract address>>, ` <br /> 
 	`"networkName": <<insert network name>> ` <br /> 
-`}` <br /> 
-To interact with IPFS, using the `ipfs-mini` API, an `ipfsConfig.json` file should be created with the following structure: <br /> 
+`}` <br /> <br /> 
+To interact with IPFS, using the `ipfs-mini` API, an `ipfsConfig.json` file should be created with the following structure: <br /> <br /> 
 `{` <br /> 
     `"host": "ipfs.infura.io", ` <br /> 
     `"port": 5001, ` <br /> 
     `"protocol": "https" ` <br /> 
-`}` <br /> 
+`}` <br /> <br /> 
 And lastly, the code needs the ABI of the smart contract it will interact with. An `abi.json` file containing the Etherless-smart contract ABI should then be created.
 The parameters within angular brackets should be replaced with the actual credentials and all the files be moved to the *Config* directory inside Etherless-server.
 
