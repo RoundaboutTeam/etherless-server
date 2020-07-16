@@ -28,7 +28,7 @@ function injectDefaultHandler(content, functionName, parametersCount) {
   }
   return `module.exports.defaultHandler = async event => {
     ${p}
-    return { message: ${functionName}(${params}) };
+    return { message: await ${functionName}(${params}) };
 }\n
   ${content}`;
 }
