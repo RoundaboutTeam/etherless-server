@@ -12,7 +12,7 @@ const { execSync } = require('child_process');
 /**
   * @desc builds the defaultHandler function and returns the new file content
   * @method injectDefaultHandler
-  * @param content the content of the file to be deployed in format string
+  * @param content the content of the file to be deployed in string format
   * @param functionName name of the function to be called in the defaultHandler
   * @param parametersCount number of parameters to be used for the function invocation in the defaultHandler
   * @return string - the content merged with the defaultHandler function
