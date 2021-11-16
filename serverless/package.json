@@ -11,7 +11,7 @@
   "dependencies": {
     "adm-zip": "^0.4.16",
     "archiver": "^4.0.1",
-    "aws-sdk": "^2.695.0",
+    "aws-sdk": "^2.814.0",
     "fs": "0.0.1-security",
     "fs-extra": "^9.0.1",
     "install-local": "^2.0.0"
